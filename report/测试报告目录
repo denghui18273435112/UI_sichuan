@@ -1,0 +1,10 @@
+如何运行pycharm
+# 在 report文件夹下运行，生成文件在report文件夹下;如果有此文件，直接覆盖数据
+pytest --alluredir=report ../testcase/test_user.py
+allure generate report --clean
+allure open allure-report
+
+# 在 testcase文件夹下运行，生成文件在testcase文件夹下
+pytest --alluredir=report test_user.py
+allure generate report --clean
+allure open allure-report

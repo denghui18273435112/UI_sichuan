@@ -1,0 +1,7 @@
+---
+#数据库连接信息
+ip: "localhost"
+account: "root"
+password: "1Q3fkUaCQMC"
+database: "zentao"
+port: 3307

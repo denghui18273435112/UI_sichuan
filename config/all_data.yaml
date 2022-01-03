@@ -1,0 +1,20 @@
+---
+#线上登录,所需 zzl-sgs-sx admin123
+login:
+  url: "https://sc.giiatop.com/#/PracticeCMS/Login"
+  login_contrast_url: "https://sc.giiatop.com/#/PracticeCMS/Home"
+  joint_url: "https://sc.giiatop.com/#/"
+  association_role: "协会角色"
+  login_account1: "zhudan"
+  login_password1: "zd2019"
+  province_role:  "省公司角色"
+  login_account2: "zzl-sgs-sx"
+  login_password2: "admin123"
+
+#数据库连接信息
+database:
+  ip: "localhost"
+  account: "root"
+  password: "1Q3fkUaCQMC"
+  database: "zentao"
+  port: 3307

@@ -1,0 +1,224 @@
+#  test_id: 用户ID
+#  module: 模块
+#  name: 标题名称
+#  priority: 优先级
+#  URL: "/company-browse.html"
+#  preposition: 前置
+#  expected_result: 预期结果
+#  actual_result: 实际结果
+# assert_fail_hint 报错的提示信息
+# location_fail_hint 定位失败提示
+#  data 操作的数据结构
+
+
+---
+#线上登录
+login:
+  url: "https://platform.giiatop.com/cip/#/login"
+  login_account: "zzl-sgs-0099"
+  password: "zzl-sgs-0099"
+  login_pass_url: "https://platform.giiatop.com/cip/#/PracticeCMS/Home"
+  code: "test"
+  new_url: "https://platform.giiatop.com/cip/#/"
+
+#QA
+#login:
+#  url: "http://qa.guangdong.giiatop.com/cip/#/login"
+#  login_account: "GD-SXXH-001"
+#  password: "GD-SXXH-001"
+#  login_pass_url: "http://qa.guangdong.giiatop.com/cip/#/PracticeCMS/Home"
+#  code: "test"
+#  new_url: "http://qa.guangdong.giiatop.com/cip/#/"
+
+#数字概览
+overview_digital:
+    test_id: "test_overview_digital_001"
+    module: "01 首页-数字概览"
+    name: "验证 总已参训人数/总计划人数相关字段、总达标人数/总参训人数  是否计算正确"
+    priority: "高"
+    URL: "PracticeCMS/Home"
+    preposition: "成功登录"
+    expected_result: "相关数据计算正确"
+    actual_result: True
+    assert_fail_hint: "总已参训人数/总计划人数、总达标人数/总参训人数 数据相互计算出现错误"
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+#参训达标走势图
+charts:
+    test_id: "test_charts_002"
+    module: "01 首页-数字概览"
+    name: "验证 参训/达标走势图  是否正确返回"
+    priority: "高"
+    URL: "PracticeCMS/Home"
+    preposition: "成功登录"
+    expected_result: "正确返回走势图数据"
+    actual_result: True
+    assert_fail_hint:
+    location_fail_hint:  "定位过程中出现元素丢失。原因:"
+    data:
+#各类达标情况
+kinds_standards:
+    test_id: "test_kinds_standards_003"
+    module: "01 首页-数字概览"
+    name: "验证 各类达标情况  是否正确返回"
+    priority: "高"
+    URL: "PracticeCMS/Home"
+    preposition: "成功登录"
+    expected_result: "正确返回走势图数据"
+    actual_result: True
+    assert_fail_hint:  "各类达标情况总参训相加 不等于 总已参训人数"
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+#学员详情
+student_details:
+    test_id: "test_student_details_003"
+    module:  "02 首页-学员详情"
+    name:  "验证 查询功能"
+    priority: "高"
+    URL:  "PracticeCMS/Home"
+    preposition:
+    expected_result:
+    actual_result: True
+    assert_fail_hint:
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+#公司数据
+company_data:
+    test_id: "test_company_data_003"
+    module:  "03 首页-公司数据"
+    name:  "验证 公司数据"
+    priority: "高"
+    URL:  "PracticeCMS/Home"
+    preposition:
+    expected_result:
+    actual_result: True
+    assert_fail_hint:
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+#汇总数据
+tabulate_data:
+    test_id: "test_tabulate_data_003"
+    module:  "03 首页-公司数据"
+    name:  "验证 汇总数据"
+    priority: "高"
+    URL:  "PracticeCMS/Home"
+    preposition:
+    expected_result:
+    actual_result: True
+    assert_fail_hint:
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+#培训计划报送
+submission_inquire:
+    test_id: "test_tabulate_data_003"
+    module:  "04 培训计划报送"
+    name:  "验证 查询操作"
+    priority: "高"
+    URL:  "PracticeCMS/PlanSubmit"
+    preposition:
+    expected_result:
+    actual_result: True
+    assert_fail_hint:
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+#培训学分查询
+inquire:
+    test_id: "test_inquire_003"
+    module:  " 05 培训学分查询"
+    name:  "验证 查询操作"
+    priority: "高"
+    URL:  "PracticeCMS/CreditInquire"
+    preposition:
+    expected_result:
+    actual_result: True
+    assert_fail_hint:
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+#培训学分模块-操作
+operation:
+    test_id: "test_operation_005"
+    module:  " 05 培训学分查询"
+    name:  "验证 操作"
+    priority: "高"
+    URL:  "PracticeCMS/CreditInquire"
+    preposition:
+    expected_result:
+    actual_result: True
+    assert_fail_hint:
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+#培训记录查询模块
+query_inquire:
+    test_id: "test_query_inquire_005"
+    module:  " 05 培训记录查询"
+    name:  "验证 操作"
+    priority: "高"
+    URL:  "PracticeCMS/RecordInquire"
+    preposition:
+    expected_result:
+    actual_result: True
+    assert_fail_hint:
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+#培训记录统计模块
+record_statistical_query_inquire:
+    test_id: "test_record_statistical_query_inquire_005"
+    module:  " 05 培训记录统计"
+    name:  "验证 操作"
+    priority: "高"
+    URL:  "PracticeCMS/RecordStatistics"
+    preposition:
+    expected_result:
+    actual_result: True
+    assert_fail_hint:
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+#账号管理
+account_management_inquire:
+    test_id: "test_account_management_inquire_005"
+    module:  " 06 账号管理"
+    name:  "账号管理-验证查询并核对"
+    priority: "高"
+    URL:  "PracticeCMS/AccountManage"
+    preposition:
+    expected_result:
+    actual_result: True
+    assert_fail_hint:
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+account_management_button_click:
+    test_id: "account_management_button_click_005"
+    module:  " 06 账号管理"
+    name:  "账号管理-点击"
+    priority: "高"
+    URL:  "PracticeCMS/AccountManage"
+    preposition: " "
+    expected_result: " "
+    actual_result: True
+    assert_fail_hint: "查询、重置、导出、分页是否正常点击"
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+test_account_management_add:
+    test_id: "test_account_management_add"
+    module:  " 06 账号管理"
+    name:  "添加账号"
+    priority: "高"
+    URL:  "PracticeCMS/AccountManage"
+    preposition: " "
+    expected_result: " "
+    actual_result: True
+    assert_fail_hint: "成功添加账号。并在列表查看是否存在且是否可登陆"
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
+test_account_management_delete:
+    test_id: "test_account_management_add"
+    module:  " 06 账号管理"
+    name:  "删除账号"
+    priority: "高"
+    URL:  "PracticeCMS/AccountManage"
+    preposition: " "
+    expected_result: " "
+    actual_result: True
+    assert_fail_hint: "删除添加账号。在列表再次确认"
+    location_fail_hint: "定位过程中出现元素丢失。原因:"
+    data:
