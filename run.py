@@ -9,4 +9,5 @@ if __name__ == "__main__":
                   "--alluredir", result_path])
     # os.system("allure generate {0} -o {1} --clean".format(result_path, allure_report_path))
     # os.system("allure serve {}".format(result_path))
+    # 测试环境
 
