@@ -8,6 +8,6 @@ if __name__ == "__main__":
                    "--maxfail=1",
                   "--alluredir", result_path])
     os.system("allure generate {0} -o {1} --clean".format(result_path, allure_report_path))
-    # os.system("allure serve {}".format(result_path))
+    os.system("allure serve {}".format(result_path))
     #公司提交
     #家里提交
