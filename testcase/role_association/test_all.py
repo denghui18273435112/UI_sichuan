@@ -7,7 +7,10 @@ class Test_all(object):
     """四川分类系统"""
 
     def teardown_method(self):
-        assert "通过" ==self.assert_result
+        #所有的用例执行 截图、生成报告、判断
+        self.assert_result[0].screenShots()
+        alluer(self.assert_result[1])
+        assert "通过" ==self.assert_result[1]["actual_result"]
     def setup_class(self):
         pass
     def teardown_class(self):

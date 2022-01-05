@@ -31,6 +31,7 @@ class all:
         """"数字概览：饼图统计"""
         try:
             self.driver.click("数字概览","contains_text")
+            self.driver.click("//li/span[contains(text(),\"线上\")]",type="xpath")
             #总已参训人数/总计划人数
             CXJHZRS=self.driver.text_get("div:nth-child(1) > div > div.container  span:nth-child(1) > span.total")
             ZYCXRS1 = int(CXJHZRS.split("/")[0])
@@ -40,26 +41,26 @@ class all:
             YCX=int(self.driver.text_get("div:nth-child(1) > div > div.container  span:nth-child(4) > span.value"))
             WCX=int(self.driver.text_get("div:nth-child(1) > div > div.container  span:nth-child(5) > span.value"))
 
-            #总达标人数/总参训人数
-            ZDBZCX = self.driver.text_get("div:nth-child(2) > div > div.container  span:nth-child(1) > span.total")
-            ZDBRS = int(ZDBZCX.split("/")[0])
-            ZYCXRS2 = int(ZDBZCX.split("/")[1])
-            YDB=int(self.driver.text_get("div:nth-child(2)  div.container  span:nth-child(2) > span.value"))
-            WDB=int(self.driver.text_get("div:nth-child(2)  div.container  span:nth-child(3) > span.value"))
-            if ZYCXRS1==YCX and ZJHRS==(CL+ZL) and ZDBRS==YDB and ZYCXRS2==(YDB+WDB):
-                self.ExcelData["expected_result"] = "总已参训人数:{0};总计划人数:{1};存量:{2};增量:{3};已参训:{4};未参训:{5};" \
-                    "总达标人数:{6};总已参训人数:{7};已达标:{8};未达标:{9};".format(ZYCXRS1,ZJHRS,CL,ZL,YCX,WCX,ZDBRS,ZYCXRS2,YDB,WDB)
+            if  YCX !=0:
+                #总达标人数/总参训人数
+                ZDBZCX = self.driver.text_get("div:nth-child(2) > div > div.container  span:nth-child(1) > span.total")
+                ZDBRS = int(ZDBZCX.split("/")[0])
+                ZYCXRS2 = int(ZDBZCX.split("/")[1])
+                YDB=int(self.driver.text_get("div:nth-child(2)  div.container  span:nth-child(2) > span.value"))
+                WDB=int(self.driver.text_get("div:nth-child(2)  div.container  span:nth-child(3) > span.value"))
+                if ZYCXRS1==YCX and ZJHRS==(CL+ZL) and ZDBRS==YDB and ZYCXRS2==(YDB+WDB):
+                    self.ExcelData["expected_result"] = "总已参训人数:{0};总计划人数:{1};存量:{2};增量:{3};已参训:{4};未参训:{5};" \
+                        "总达标人数:{6};总已参训人数:{7};已达标:{8};未达标:{9};".format(ZYCXRS1,ZJHRS,CL,ZL,YCX,WCX,ZDBRS,ZYCXRS2,YDB,WDB)
+                else:
+                    self.ExcelData["actual_result"] = False
             else:
-                self.ExcelData["actual_result"] = False
+                self.ExcelData["actual_result"] = "当前线上第三方没有数据,怀疑数据异常"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
-
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
     def standard_direction(self):
         """数字概览：参训/达标走势图"""
@@ -76,14 +77,12 @@ class all:
             self.driver.click("div.right-wrapper > div:nth-child(2) > span.chart")
             self.driver.click("div.left-wrapper > div:nth-child(1) div > span > span > i")
             self.driver.click("//li/span[contains(text(),\"达标走势\")]",type="xpath")
-         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def kinds_standards(self):
@@ -104,14 +103,12 @@ class all:
                     self.ExcelData["actual_result"] = False
             else:
                 self.ExcelData["actual_result"] = "当前统计处没有课程"
-        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def student_details(self):
@@ -120,7 +117,7 @@ class all:
             self.driver.click("学员详情","contains_text")
             #self.driver.drop_down_choice("div  div.top > div:nth-child(5) > div span>span","//li/span[contains(text(),\"2021\")]",type1="css",type2="xpath")
             time.sleep(2)
-            if  self.driver.list_data_number() >0:
+            if  self.driver.list_data_number() >=5:
                 #培训类型/岗前测评完成状态/达标状态
                 training_type = self.driver.text_get(6,"zzl_list_01")
                 self.driver.drop_down_choice(3,training_type,type1="css_1",type2="xpath_1")
@@ -156,17 +153,13 @@ class all:
                     self.ExcelData["actual_result"] = "筛选条件和返回结果不一致"
                 self.driver.screenShots("公司名称姓名、证件号码查询")
             else:
-                self.ExcelData["actual_result"] = "当前查询列表无数据。模块数据异常"
+                self.ExcelData["actual_result"] = "当前查询列表无数据、模块数据异常、当前列表数据少于5条,无法开发自动化测试"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]
-            my_log().debug(self.ExcelData["actual_result"])
-            self.driver.screenShots()
-            alluer(self.ExcelData)
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def company_data(self):
@@ -182,13 +175,11 @@ class all:
              else:
                 self.ExcelData["actual_result"] = "列表数据数据;请手动确认此模块是否存在异常"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def tabulate_data(self):
@@ -202,13 +193,11 @@ class all:
             # if int(CXRS)!=0:
             #     self.ExcelData["actual_result"] =="有数据没问题"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def PlanSubmit_01(self):
@@ -221,13 +210,11 @@ class all:
             else:
                 self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]
        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def PlanSubmit_02(self):
@@ -242,14 +229,11 @@ class all:
             else:
                 self.ExcelData["actual_result"] ==self.ExcelData["location_fail_hint"]
        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
-
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
     def query_inquire(self):
         """培训记录查询模块-查询、按钮操作"""
@@ -270,14 +254,11 @@ class all:
             self.driver.click("导出",type="starts_with_1")
             self.driver.text_input("//*/span[starts-with(.,\"前往\")]//input",10,type="xpath")
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
-
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
     def inquire_operation(self):
         """培训学分查询模块-字段查询"""
@@ -298,13 +279,11 @@ class all:
             self.driver.click("导出",type="starts_with_1")
             self.driver.text_input("//*/span[starts-with(.,'前往')]//input",10,type="xpath",empty=True)
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def account_management_inquire(self):
@@ -319,13 +298,11 @@ class all:
             self.driver.click("导出",type="starts_with_1")
             # self.driver.text_input("//*/span[starts-with(.,'前往')]//input",10,type="xpath",empty=True)
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def test_account_management_add(self):
@@ -342,13 +319,11 @@ class all:
             self.driver.click("div.el-cascader__suggestion-panel.el-scrollbar > div.el-scrollbar__wrap > ul > li",plural=1)
             self.driver.click("确定",type="starts_with_1")
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def test_account_management_delete(self):
@@ -365,14 +340,11 @@ class all:
                 else:
                     self.ExcelData["actual_result"] = "尚未找到需要删除的用户信息"
          #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
-
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
     def test_RecordImport(self):
         """培训记录导入：省公司导入数据"""
@@ -399,13 +371,11 @@ class all:
             self.driver.click("提交",type="contains_text",plural=1)
             time.sleep(5)
          #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
 
@@ -423,13 +393,11 @@ class all:
             #self.driver.drop_down_choice(4,"全部",type1="css_1",type2="xpath_1",plural2=3)
             self.driver.click("导出",type="starts_with_1")
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def test_TrainingFileManage(self):
@@ -465,13 +433,11 @@ class all:
                     self.ExcelData["actual_result"] = "尚未找到需要删除的用户信息"
             time.sleep(3)
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def test_OnlineLearning(self):
@@ -479,13 +445,11 @@ class all:
         try:
             time.sleep(5)
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def test_TrainingExam_01(self):
@@ -511,13 +475,11 @@ class all:
             self.driver.upload_file("div:nth-child(8) > div > div > input",file_path_05,type="input")
             time.sleep(5)
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
     def test_TrainingExam_02(self):
         """培训测评-培训统计 查询操作"""
@@ -528,17 +490,72 @@ class all:
             self.driver.click("查询",type="starts_with_1")
             self.driver.click("导出",type="starts_with_1")
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
+        except BaseException:
             traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
 
+    def test_logion_fail(self):
+        """账号登录：失败"""
+        try:
+            login =Yaml_read("all_data.yaml","login")
+            time.sleep(10)
+            self.driver.text_input("请输入账号",self.data["user"],type="css_1")
+            self.driver.text_input("请输入密码",self.data["password"],type="css_1")
+            while True:
+                #截图验证并设别；直到验证码正常位置
+                element =self.driver.click('form  img')
+                self.driver.text_input("请输入验证码","eeee",type="css_1")
+                self.driver.click("span.login-button")
+                if self.driver.get_url() !=login["login_contrast_url"]:
+                    break
+                else:
+                    self.ExcelData["actual_result"] = "错误的验证也可以登录"
+        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
+    def test_logion_succeed(self):
+        """账号登录：成功"""
+        try:
+            login =Yaml_read("all_data.yaml","login")
+            time.sleep(10)
+            self.driver.text_input("请输入账号",self.data["user"],type="css_1")
+            self.driver.text_input("请输入密码",self.data["password"],type="css_1")
+            self.driver.text_input("请输入验证码","denghui",type="css_1")
+            # while True:
+            #     # #截图验证并设别；直到验证码正常位置
+            #     # element =self.driver.click('form  img')
+            #     # left = int(element.location['x'])
+            #     # top = int(element.location['y'])
+            #     # right = int(element.location['x'] + element.size['width'])
+            #     # bottom = int(element.location['y'] + element.size['height'])
+            #     # path = _file_path + os.sep + 'code.png'
+            #     # self.driver.save_screenshot(path)
+            #     # im = Image.open(path)
+            #     # im = im.crop((left, top, right, bottom))
+            #     # im.save(path)
+            #     # print("\n识别的验证码:{}\n".format(verification_code()))
+            #     self.driver.text_input("请输入验证码","denghui",type="css_1")
+            #     self.driver.click("span.login-button")
+            #     if self.driver.get_url() ==login["login_contrast_url"]:
+            #         pass
+            #     else:
+            #         self.ExcelData["actual_result"] = "登录失败"
+
+            time.sleep(10)
+        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
 
@@ -743,66 +760,3 @@ class all:
         return self.Data["actual_result"]
 
 
-    def test_logion_fail(self):
-        """账号登录：失败"""
-        try:
-            login =Yaml_read("all_data.yaml","login")
-            time.sleep(10)
-            self.driver.text_input("请输入账号",self.data["user"],type="css_1")
-            self.driver.text_input("请输入密码",self.data["password"],type="css_1")
-            while True:
-                #截图验证并设别；直到验证码正常位置
-                element =self.driver.click('form  img')
-                self.driver.text_input("请输入验证码","eeee",type="css_1")
-                self.driver.click("span.login-button")
-                if self.driver.get_url() !=login["login_contrast_url"]:
-                    break
-                else:
-                    self.ExcelData["actual_result"] = "错误的验证也可以登录"
-        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
-            traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
-
-    def test_logion_succeed(self):
-        """账号登录：成功"""
-        try:
-            login =Yaml_read("all_data.yaml","login")
-            time.sleep(10)
-            self.driver.text_input("请输入账号",self.data["user"],type="css_1")
-            self.driver.text_input("请输入密码",self.data["password"],type="css_1")
-            self.driver.text_input("请输入验证码","denghui",type="css_1")
-            # while True:
-            #     # #截图验证并设别；直到验证码正常位置
-            #     # element =self.driver.click('form  img')
-            #     # left = int(element.location['x'])
-            #     # top = int(element.location['y'])
-            #     # right = int(element.location['x'] + element.size['width'])
-            #     # bottom = int(element.location['y'] + element.size['height'])
-            #     # path = _file_path + os.sep + 'code.png'
-            #     # self.driver.save_screenshot(path)
-            #     # im = Image.open(path)
-            #     # im = im.crop((left, top, right, bottom))
-            #     # im.save(path)
-            #     # print("\n识别的验证码:{}\n".format(verification_code()))
-            #     self.driver.text_input("请输入验证码","denghui",type="css_1")
-            #     self.driver.click("span.login-button")
-            #     if self.driver.get_url() ==login["login_contrast_url"]:
-            #         pass
-            #     else:
-            #         self.ExcelData["actual_result"] = "登录失败"
-
-            time.sleep(10)
-
-        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except BaseException as error:
-            traceback.print_exc()
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]+error
-            my_log().debug(self.ExcelData["actual_result"])
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        return self.ExcelData["actual_result"]
