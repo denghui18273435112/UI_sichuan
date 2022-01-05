@@ -115,7 +115,7 @@ class all:
         """学员详情：字段查询"""
         try:
             self.driver.click("学员详情","contains_text")
-            #self.driver.drop_down_choice("div  div.top > div:nth-child(5) > div span>span","//li/span[contains(text(),\"2021\")]",type1="css",type2="xpath")
+            self.driver.drop_down_choice("div  div.top > div:nth-child(5) > div span>span","//li/span[contains(text(),\"2021\")]",type1="css",type2="xpath")
             time.sleep(2)
             if  self.driver.list_data_number() >=5:
                 #培训类型/岗前测评完成状态/达标状态
