@@ -294,16 +294,14 @@ class selenium():
         :param Scroll_position: 滚动位置；100/200/1000
          :param plural: 复数
         :param location: 定位
-        :param Positioning_way: 定位方式 id、className、css
+        :param Positioning_way: 定位方式 id、ClassName、css
         :param Scroll_type: 滚动类型;windos滚动、table滚动、其它滚动
         :param Scroll_way: 滚动方式；左右上下 Top上下；Left左右
         :return:
         """
-        if  Scroll_type== "no_windows":
-            # if plural == 0 and Scroll_way == "Top":#非浏览器滚动条
-            #     js = "var q=document.getElementsBy{0}('{1}')[{2}].scroll{4}={3}".format(Positioning_way, location, plural, Scroll_position,Scroll_way)
+        if  Scroll_type== "no_windows":#非浏览器自带滚动条
             if  Positioning_way != "css":
-                js = "var q=document.getElementBy{0}('{1}').scroll{3}={2}".format(Positioning_way, location, Scroll_position,Scroll_way)
+                js = "var q=document.getElementsBy{0}('{1}')[{4}].scroll{3}={2}".format(Positioning_way, location, Scroll_position,Scroll_way,plural)
             elif Positioning_way =="css":
                 js='document.querySelectorAll("{0}")[{1}].scroll{2}={3}'.format(location, plural,Scroll_way, Scroll_position)
         elif  Scroll_type== "windows":#浏览器自带滚动条

@@ -31,7 +31,8 @@ class all:
         """"数字概览：饼图统计"""
         try:
             self.driver.click("数字概览","contains_text")
-            self.driver.click("//li/span[contains(text(),\"线上\")]",type="xpath")
+            self.driver.click("div  div.top > div:nth-child(2) > div span>span")
+            self.driver.click("//li/span[contains(text(),'线上')]",type="xpath")
             #总已参训人数/总计划人数
             CXJHZRS=self.driver.text_get("div:nth-child(1) > div > div.container  span:nth-child(1) > span.total")
             ZYCXRS1 = int(CXJHZRS.split("/")[0])
@@ -40,7 +41,6 @@ class all:
             ZL=int(self.driver.text_get("div:nth-child(1) > div > div.container  span:nth-child(3) > span.value"))
             YCX=int(self.driver.text_get("div:nth-child(1) > div > div.container  span:nth-child(4) > span.value"))
             WCX=int(self.driver.text_get("div:nth-child(1) > div > div.container  span:nth-child(5) > span.value"))
-
             if  YCX !=0:
                 #总达标人数/总参训人数
                 ZDBZCX = self.driver.text_get("div:nth-child(2) > div > div.container  span:nth-child(1) > span.total")
@@ -70,13 +70,17 @@ class all:
             self.driver.click("//li/span[contains(text(),\"线上\")]",type="xpath")
             self.driver.click("#app > div > div.container.main-right.scroll-bar > div.wrapper")
             self.driver.click("#app > div > div.container.main-right.scroll-bar")
-            self.driver.Page_scrolling(5000)
+            self.driver.Page_scrolling(5000,Positioning_way="ClassName")
             self.driver.click("div.wrapper > div.line div.right-wrapper > div > span.chart.active")
             self.driver.click("div.condition.conditions > div.right-wrapper > div > span.tables")
-            self.driver.click("div.right-wrapper > div:nth-child(1) > span")
-            self.driver.click("div.right-wrapper > div:nth-child(2) > span.chart")
-            self.driver.click("div.left-wrapper > div:nth-child(1) div > span > span > i")
-            self.driver.click("//li/span[contains(text(),\"达标走势\")]",type="xpath")
+            self.driver.screenShots()
+            if  self.driver.list_data_number("div.is-scrolling-none>table.el-table__body>tbody") >=1:
+                self.driver.click("div.right-wrapper > div:nth-child(1) > span")
+                self.driver.click("div.right-wrapper > div:nth-child(2) > span.chart")
+                self.driver.click("div.left-wrapper > div:nth-child(1) div > span > span > i")
+                self.driver.click("//li/span[contains(text(),\"达标走势\")]",type="xpath")
+            else:
+                self.ExcelData["actual_result"] = "当前参训/达标走势图 列表无数据"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -89,16 +93,16 @@ class all:
         """数字概览：各类达标情况"""
         try:
             self.driver.click("数字概览","contains_text")
-            ke_shulaing = self.driver.list_data_number(location="div > div.wrapper > div.pies > div:nth-child(2) > div",location_type1="span")
-            if ke_shulaing >=1:
+            self.driver.Page_scrolling(Positioning_way="ClassName")
+            ke_shuliang = self.driver.list_data_number(location="div > div.wrapper > div.pies > div:nth-child(2) > div",location_type1="span")
+            if ke_shuliang >=1:
                 CXJHZRS=self.driver.text_get("div:nth-child(1) > div > div.container  span:nth-child(1) > span.total")
                 ZYCXRS = int(CXJHZRS.split("/")[0])
-                self.driver.Page_scrolling()
                 sum_new = 0
                 dingwei = self.driver.text_get("div.pies > div:nth-child(2)  div:nth-child(1) > div > span:nth-child(1)").split("/")[0].split(":")[1]
                 sum_new += int(dingwei)
                 if  sum_new>=1:
-                    self.ExcelData["expected_result"] = "只能证明有数据而已；课程的数据：{}".format(ke_shulaing//2)
+                    self.ExcelData["expected_result"] = "只能证明有数据而已；课程的数据：{}".format(ke_shuliang//2)
                 else:
                     self.ExcelData["actual_result"] = False
             else:
@@ -115,14 +119,13 @@ class all:
         """学员详情：字段查询"""
         try:
             self.driver.click("学员详情","contains_text")
-            self.driver.drop_down_choice("div  div.top > div:nth-child(5) > div span>span","//li/span[contains(text(),\"2021\")]",type1="css",type2="xpath")
             time.sleep(2)
-            if  self.driver.list_data_number() >=5:
+            if  self.driver.list_data_number() >=1:
                 #培训类型/岗前测评完成状态/达标状态
                 training_type = self.driver.text_get(6,"zzl_list_01")
                 self.driver.drop_down_choice(3,training_type,type1="css_1",type2="xpath_1")
                 if  self.driver.list_data_number() >0:
-                    for y in range(1,self.driver.list_data_number()):
+                    for y in range(1,self.driver.list_data_number()+1):
                         if  self.driver.text_get(10,"zzl_list_01",y) != "--":
                             gangqian_type = self.driver.text_get(10,"zzl_list_01",y)
                             break
@@ -166,8 +169,8 @@ class all:
         """公司数据：查询导出"""
         try:
              self.driver.click("公司数据","contains_text")
-             if  self.driver.list_data_number(location="div.is-scrolling-none>table>tbody") >0:
-                 self.driver.click("div.top20.table-area > div.tabs > span.tables > svg")
+             self.driver.click("div.top20.table-area > div.tabs > span.tables > svg")
+             if  self.driver.list_data_number(location="div.is-scrolling-none>table>tbody",plural=0) >0 and self.driver.list_data_number(location="div.is-scrolling-none>table>tbody",plural=1) >0:
                  self.driver.click("div.top20.table-area > div.tabs > span.chart >svg")
                  self.driver.text_input("div.condition > div > div > div:nth-child(1) > div > input",
                                          self.driver.text_get(" table > tbody > tr:nth-child(1) > td.el-table_1_column_1.is-center > div"),Enter=True)
@@ -203,12 +206,12 @@ class all:
     def PlanSubmit_01(self):
         """培训计划报送：填写报送计划"""
         try:
-            if self.driver.list_data_number(location="div.is-scrolling-none>table>tbody") >0:
+            if self.driver.list_data_number(location="table.el-table__body>tbody", plural=0) ==22:
                 self.driver.click("div:nth-child(5) > span.zzl-button")
                 self.driver.click("div:nth-child(7) > span.zzl-button")
                 self.driver.click("确定",type="contains_text")
             else:
-                self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]
+                self.ExcelData["actual_result"] = "当前列表的数据条数不足22条"
        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -238,21 +241,25 @@ class all:
     def query_inquire(self):
         """培训记录查询模块-查询、按钮操作"""
         try:
-            self.driver.text_input("input[placeholder='请选择所属机构']",self.driver.text_get(1,"zzl_list_01"),empty=True)
-            self.driver.click("div.el-cascader__suggestion-panel.el-scrollbar > div.el-scrollbar__wrap > ul > li:nth-child(1)")
-            self.driver.drop_down_choice(2,"仅限本机构",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(2,"本机构及下级",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(4,self.driver.text_get(6,"zzl_list_01"),type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(3,"2020",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(3,"2021",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(7,"身份证",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(9,"线上",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(10,"其他第三方",type1="css_1",type2="xpath_1")
-            self.driver.text_input("div:nth-child(6) > div.el-input > input[placeholder=\"请输入\"]",self.driver.text_get(2,"zzl_list_01"))
-            self.driver.text_input("div:nth-child(8) > div.el-input > input[placeholder=\"请输入\"]",self.driver.text_get(4,"zzl_list_01"))
-            self.driver.click("查询",type="starts_with_1")
-            self.driver.click("导出",type="starts_with_1")
-            self.driver.text_input("//*/span[starts-with(.,\"前往\")]//input",10,type="xpath")
+            if self.driver.list_data_number() >0:
+                self.driver.text_input("input[placeholder='请选择所属机构']",self.driver.text_get(1,"zzl_list_01"),empty=True)
+                self.driver.click("div.el-cascader__suggestion-panel.el-scrollbar > div.el-scrollbar__wrap > ul > li:nth-child(1)")
+                self.driver.drop_down_choice(2,"仅限本机构",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(2,"本机构及下级",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(4,self.driver.text_get(6,"zzl_list_01"),type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(3,"2022",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(3,"2021",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(7,"身份证",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(9,"线上",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(10,"其他第三方",type1="css_1",type2="xpath_1")
+                self.driver.resfresh()
+                self.driver.text_input("div:nth-child(6) > div.el-input > input[placeholder=\"请输入\"]",self.driver.text_get(2,"zzl_list_01"))
+                self.driver.text_input("div:nth-child(8) > div.el-input > input[placeholder=\"请输入\"]",self.driver.text_get(4,"zzl_list_01"))
+                self.driver.click("查询",type="starts_with_1")
+                self.driver.click("导出",type="starts_with_1")
+                self.driver.text_input("//*/span[starts-with(.,\"前往\")]//input",10,type="xpath")
+            else:
+                self.ExcelData["actual_result"] =="当前列表无数据，可能存在数据异常"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -263,21 +270,25 @@ class all:
     def inquire_operation(self):
         """培训学分查询模块-字段查询"""
         try:
-            self.driver.text_input("input[placeholder='请选择所属机构']",self.driver.text_get(1,"zzl_list_01"),empty=True)
-            self.driver.click("div.el-cascader__suggestion-panel.el-scrollbar > div.el-scrollbar__wrap > ul > li:nth-child(1)")
-            self.driver.drop_down_choice(2,"仅限本机构",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(2,"本机构及下级",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(4,self.driver.text_get(6,"zzl_list_01"),type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(3,"2020",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(3,"2021",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(7,"身份证",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(9,"线上",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(10,"其他第三方",type1="css_1",type2="xpath_1")
-            self.driver.text_input("div:nth-child(6) > div.el-input > input[placeholder='请输入']",self.driver.text_get(2,"zzl_list_01"))
-            self.driver.text_input("div:nth-child(8) > div.el-input > input[placeholder='请输入']",self.driver.text_get(4,"zzl_list_01"))
-            self.driver.click("查询",type="starts_with_1")
-            self.driver.click("导出",type="starts_with_1")
-            self.driver.text_input("//*/span[starts-with(.,'前往')]//input",10,type="xpath",empty=True)
+            if self.driver.list_data_number() >0:
+                self.driver.text_input("input[placeholder='请选择所属机构']",self.driver.text_get(1,"zzl_list_01"),empty=True)
+                self.driver.click("div.el-cascader__suggestion-panel.el-scrollbar > div.el-scrollbar__wrap > ul > li:nth-child(1)")
+                self.driver.drop_down_choice(2,"仅限本机构",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(2,"本机构及下级",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(4,self.driver.text_get(6,"zzl_list_01"),type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(3,"2020",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(3,"2021",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(7,"身份证",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(9,"线上",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(10,"其他第三方",type1="css_1",type2="xpath_1")
+                self.driver.resfresh()
+                self.driver.text_input("div:nth-child(6) > div.el-input > input[placeholder='请输入']",self.driver.text_get(2,"zzl_list_01"))
+                self.driver.text_input("div:nth-child(8) > div.el-input > input[placeholder='请输入']",self.driver.text_get(4,"zzl_list_01"))
+                self.driver.click("查询",type="starts_with_1")
+                self.driver.click("导出",type="starts_with_1")
+                self.driver.text_input("//*/span[starts-with(.,'前往')]//input",10,type="xpath",empty=True)
+            else:
+                self.ExcelData["actual_result"] =="当前列表无数据，可能存在数据异常"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -366,8 +377,8 @@ class all:
             for x in range(1,10):
                 self.driver.click("label:nth-child({}) > span.el-checkbox__input > span".format(x))
             self.driver.click("确定",type="contains_text")
-            self.driver.text_input("div:nth-child(1) > div:nth-child(2)  div > input:nth-child(2)","2021-12-21 00:00:00",plural=0)
-            self.driver.text_input("div:nth-child(1) > div:nth-child(2)  div> input:nth-child(4)","2021-12-22 00:00:00")
+            self.driver.text_input("div:nth-child(1) > div:nth-child(2)  div > input:nth-child(2)","2022-01-01 00:00:00",plural=0)
+            self.driver.text_input("div:nth-child(1) > div:nth-child(2)  div> input:nth-child(4)","2022-01-01 00:00:00")
             self.driver.click("提交",type="contains_text",plural=1)
             time.sleep(5)
          #截图/校验部分/用于判断用例是否通过/定位不到抛异常
