@@ -26,3 +26,6 @@ file_path_02= import_file_path+os.sep+"01入职前诚信级别批量查询模板
 file_path_03= import_file_path+os.sep+"02四川-寿险-培训记录导入.xlsx"
 file_path_04= file_path+os.sep+"华海财险培训教材.pdf"
 file_path_05= import_file_path+os.sep+"03培训测评批量查询模板.xlsx"
+file_path_06= import_file_path+os.sep+"04四川在职人员导入模板.xlsx"
+file_path_07= import_file_path+os.sep+"05四川离职人员导入模板.xlsx"
+

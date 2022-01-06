@@ -14,24 +14,24 @@ from config.path import *
 def driver():
     """前置：删除report/result的文件信息；登录并返回浏览器驱动；后置：关闭浏览器"""
     #清空报告文件夹下的垃圾文件
-    print("\n>>清空无关图片或文件中....>>\n")
-    try:
-        pass
-        # for one in os.listdir(result_path):
-        #     if "environment.properties" not in one:
-        #         os.remove(result_path+os.sep+"{}".format(one))
-        # for one_2 in os.listdir(logs_path):
-        #         os.remove(logs_path+os.sep+"{}".format(one_2))
-        # for one_1 in os.listdir(photo_path):
-        #     if "_截图" in one_1:
-        #         os.remove(photo_path+os.sep+"{}".format(one_1))
-        # if os.path.exists(allure_report_path):
-        #     os.rmdir(allure_report_path)
-    except:
-        print("\n>>没有可删除的文件>>\n")
-    print("\n>>安装最新插件中.....>>\n")
-    os.system("pip freeze > requirements.txt")
-    print("\n>>进入UI自动化测试环节.....>>\n")
+    # print("\n>>清空无关图片或文件中....>>\n")
+    # try:
+    #     pass
+    #     # for one in os.listdir(result_path):
+    #     #     if "environment.properties" not in one:
+    #     #         os.remove(result_path+os.sep+"{}".format(one))
+    #     # for one_2 in os.listdir(logs_path):
+    #     #         os.remove(logs_path+os.sep+"{}".format(one_2))
+    #     # for one_1 in os.listdir(photo_path):
+    #     #     if "_截图" in one_1:
+    #     #         os.remove(photo_path+os.sep+"{}".format(one_1))
+    #     # if os.path.exists(allure_report_path):
+    #     #     os.rmdir(allure_report_path)
+    # except:
+    #     print("\n>>没有可删除的文件>>\n")
+    # print("\n>>安装最新插件中.....>>\n")
+    # os.system("pip freeze > requirements.txt")
+    # print("\n>>进入UI自动化测试环节.....>>\n")
 
     #打开浏览器;输入账号和密码
     option = webdriver.ChromeOptions()
@@ -64,6 +64,6 @@ def driver():
             break
         driver.find_element_by_css_selector('span.login-button').click()
     print("登录成功的cookies信息:{}\n".format(driver.get_cookies()))
-    time.sleep(10)
+    #time.sleep(5)
     yield driver
     driver.quit()

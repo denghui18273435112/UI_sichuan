@@ -105,8 +105,6 @@ class selenium():
                 text_frame = self.driver.find_element_by_xpath("//*[contains(text(),'{}')]".format(location))
             elif type == "xpath_contains_text_2":
                 text_frame = self.driver.find_element(type,content)
-
-
         else:
             if type == "id":
                 text_frame = self.driver.find_elements_by_id(location)[plural]

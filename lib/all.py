@@ -23,9 +23,8 @@ class all:
         self.data = json.loads(Data["data"])
         self.ExcelData = Data
         self.driver.url_skip(self.ExcelData["URL"])
-        #my_log().debug("["+self.ExcelData["test_id"]+"--"+self.ExcelData["module"]+"--"+self.ExcelData["name"]+"]")
         print("{} 运行中.....".format(self.ExcelData["test_id"]))
-        time.sleep(10)
+        time.sleep(5)
 
     def overview_digital(self):
         """"数字概览：饼图统计"""
@@ -570,54 +569,24 @@ class all:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+######################################################诚信相关模块######################################################
     def OD_inquire(self):
         """个人信息查询-单个查询"""
         try:
-            self.driver.zzl_text_input(location="请输入姓名",content=self.data["name"],type="css_text",Enter=False)
-            self.driver.drop_down_choice(location1="div:nth-child(2) > div.el-select  span > i", location2=self.data["type"], type="xpath_starts_with")
-            self.driver.zzl_text_input(location="请输入证件号码",content=self.data["number"],type="css_text")
-            self.driver.click("div:nth-child(2)   div.el-table__fixed-right  tr:nth-child(1) > td:nth-child(17) svg",type="css")
-            self.driver.back()
-            self.driver.click("div.is-scrolling-left  tr:nth-child(1) td:nth-child(6)",type="css")
-        # #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except Exception:
-            print(traceback.print_exc())
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        print("{} 已结束.....".format(self.ExcelData["test_id"]))
-        return self.ExcelData["actual_result"]
-
+            self.driver.text_input(location="请输入姓名",content=self.data["name"],type="css_1")
+            self.driver.drop_down_choice(location1="div:nth-child(2) > div.el-select  span > i", location2=self.data["type"], type2="starts_with")
+            self.driver.text_input(location="请输入证件号码",content=self.data["number"],type="css_1",Enter=True)
+            if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") >=1:
+                self.driver.click(16,"zzl_list_02")
+                self.driver.back()
+            else:
+                self.ExcelData["actual_result"] = "当前查询列表无数据"
+        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
     def Batch_query_Reset(self):
         """个人信息查询-批量查询、重置"""
@@ -625,15 +594,16 @@ class all:
             self.driver.click("div.condition div:nth-child(6)")
             self.driver.text_input("div.container textarea", self.data["nameORnumber"])
             self.driver.click("div.container div.footer span:nth-child(2)")
-       # #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except Exception:
-            print(traceback.print_exc())
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        print("{} 已结束.....".format(self.ExcelData["test_id"]))
-        return self.ExcelData["actual_result"]
-
+            if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") >=4:
+                pass
+            else:
+                self.ExcelData["actual_result"] = "当前查询列表无数据"
+       #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
     def import_query(self):
         """导入批量查询"""
@@ -641,14 +611,16 @@ class all:
             self.driver.click("模板下载",type="contains_text")
             self.driver.upload_inputType("div:nth-child(2) div > div:nth-child(8)  input",file_path_02)
             self.driver.click("导出",type="contains_text")
-       # #截图/校验部分/用于判断用例是否通过/定位不到抛异常
-        except Exception:
-            print(traceback.print_exc())
-            self.ExcelData["actual_result"] = self.ExcelData["location_fail_hint"]
-        self.driver.screenShots()
-        alluer(self.ExcelData)
-        print("{} 已结束.....".format(self.ExcelData["test_id"]))
-        return self.ExcelData["actual_result"]
+            if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") >=4:
+                pass
+            else:
+                self.ExcelData["actual_result"] = "当前查询列表无数据"
+       #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
 
 
     def IPM_query(self):
@@ -771,3 +743,40 @@ class all:
         return self.Data["actual_result"]
 
 
+    def test_IncumbentImport(self):
+        """在职人员管理-导入页面：导入操作"""
+        try:
+            self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_06,type="input")
+            time.sleep(10)
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+    def test_LeaversImport(self):
+        """离职人员管理-导入页面：导入操作"""
+        try:
+            self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_07,type="input")
+            time.sleep(10)
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+    def test_update_01(self):
+        """个人信息修改"""
+        try:
+            self.driver.click("个人信息修正","contains_text")
+            self.driver.click("div.condition span",plural=6)
+            self.driver.text_input("div.container textarea", self.data["nameORnumber"])
+            self.driver.click("div.el-dialog__body span.zzl-button.primary:nth-child(2)")
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
