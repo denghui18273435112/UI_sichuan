@@ -610,6 +610,7 @@ class all:
         try:
             self.driver.click("模板下载",type="contains_text")
             self.driver.upload_inputType("div:nth-child(2) div > div:nth-child(8)  input",file_path_02)
+            time.sleep(5)
             self.driver.click("导出",type="contains_text")
             if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") >=4:
                 pass

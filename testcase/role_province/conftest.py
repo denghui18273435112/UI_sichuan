@@ -34,7 +34,7 @@ def driver():
 
     #打开浏览器;输入账号和密码
     option = webdriver.ChromeOptions()
-    option.headless =True
+    option.headless =False
     option.add_argument('window-size=1920x1080')
     option.add_experimental_option("excludeSwitches", ['enable-automation']);
     driver = webdriver.Chrome(options=option)

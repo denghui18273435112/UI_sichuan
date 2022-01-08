@@ -2,6 +2,27 @@ import pytest
 from tools.Yaml_read import Yaml_read
 from lib.all import *
 from tools.ExcelData import *
+import pytest
+from tools.Yaml_read import Yaml_read
+from lib.all import *
+from tools.ExcelData import *
+import pytest
+from tools.Yaml_read import Yaml_read
+from lib.all import *
+from tools.ExcelData import *
+import time
+import win32gui
+import traceback
+import allure
+import win32con
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from tools.Base import *
+from tools.WinUpLoadFile import upload_files
+from tools.Yaml_read import Yaml_read
+import requests
+
 
 class Test_all(object):
     """四川分类系统"""
@@ -32,6 +53,8 @@ class Test_all(object):
     def test_logion_succeed(self,driver,Data):
         """账号登录：成功"""
         self.assert_result = all(driver,Data).test_logion_succeed()
+
+
 
 
 

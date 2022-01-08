@@ -19,7 +19,6 @@ from tools.WinUpLoadFile import upload_files
 from tools.Yaml_read import Yaml_read
 import requests
 
-
 class Test_all(object):
     """四川分类系统"""
     def setup_class(self):
