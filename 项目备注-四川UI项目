@@ -18,5 +18,14 @@ pip freeze > requirements.txt
 Terminal
 git pull
 git pull origin masterit
+Terminal
+git pull
+git pull origin masterit
+Terminal
+git pull
+git pull origin masterit
+Terminal
+git pull
+git pull origin masterit
 
 
