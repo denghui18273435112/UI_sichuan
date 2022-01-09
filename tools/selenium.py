@@ -23,6 +23,8 @@ class selenium():
             # -> find_element("css selector","")
         """
         self.driver= driver
+    def find_element_by_css_selector(self):
+        self.driver.find_element_by_css_selector()
 
     def save_screenshot(self,path):
         return self.driver.save_screenshot(path)
@@ -231,6 +233,8 @@ class selenium():
             location_new1.send_keys(photo)
             time.sleep(3)
 
+    def switch_to(self):
+        self.driver.switch_to.alert.text()
 
     def click(self, location,type="css",plural=None):
         """

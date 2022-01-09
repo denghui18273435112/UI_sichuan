@@ -775,6 +775,14 @@ class all:
             self.driver.click("div.condition span",plural=6)
             self.driver.text_input("div.container textarea", self.data["nameORnumber"])
             self.driver.click("div.el-dialog__body span.zzl-button.primary:nth-child(2)")
+            self.driver.click("导出",type="contains_text")
+            for x in range(1,5):
+                    self.driver.click("div.el-table__fixed-body-wrapper tbody>tr:nth-child({})>td:nth-child(13) svg:nth-child(1)".format(x))
+                    self.driver.back()
+                    self.driver.click("div.el-table__fixed-body-wrapper tbody>tr:nth-child({})>td:nth-child(13) svg:nth-child(2)".format(x))
+                    self.driver.click("div.el-dialog__body  div.footer > span.primary",plural=1)
+                    self.driver.screenShots("成功修改信息")
+                    time.sleep(3)
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -786,6 +794,44 @@ class all:
         """删除添加的数据"""
         try:
             time.sleep(5)
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+    def test_IncumbentManage(self):
+        """在职人员管理"""
+        try:
+            self.driver.click("批量查询",type="contains_text")
+            self.driver.text_input("div.container textarea", self.data["nameORnumber"])
+            self.driver.click("div.el-dialog__body span.zzl-button.primary:nth-child(2)")
+            if self.driver.list_data_number() ==2:
+                self.driver.click("导出",type="contains_text")
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+    def test_LeaversManage(self):
+        """离职人员管理"""
+        try:
+            self.driver.click("div.el-dialog__body  div.footer > span.primary")
+            time.sleep(2)
+            self.driver.text_input("div.condition-wrapper > div > div:nth-child(4) > div.el-input>input",content=self.data["nameORnumber"])
+            self.driver.text_input("div.condition-wrapper > div > div:nth-child(2) > div.el-input>input",content=self.data["name"],Enter=True)
+            if self.driver.list_data_number() ==1:
+                self.driver.click("导出",type="contains_text")
+                self.driver.click("div.el-table__fixed-body-wrapper tbody>tr:nth-child(1)>td svg",plural=2)
+                self.driver.back()
+                self.driver.click("div.el-table__fixed-body-wrapper tbody>tr:nth-child(1)>td svg",plural=3)
+                self.driver.click("div.el-dialog__body  div.footer > span.primary",plural=1)
+                self.driver.screenShots("成功修改信息")
+            else:
+                self.ExcelData["actual_result"]="查询无数据"
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()

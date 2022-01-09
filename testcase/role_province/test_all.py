@@ -146,6 +146,13 @@ class Test_all(object):
     def test_import_query(self,driver,Data):
         """导入查询"""
         self.assert_result = all(driver,Data).import_query()
+    #@pytest.mark.test
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_IncumbentManage"))
+    @pytest.mark.run(order=207)
+    def test_IncumbentManage(self,driver,Data):
+        """在职人员管理"""
+        self.assert_result = all(driver,Data).test_IncumbentManage()
 
 
 

@@ -18,6 +18,24 @@ from tools.Base import *
 from tools.WinUpLoadFile import upload_files
 from tools.Yaml_read import Yaml_read
 import requests
+import pytest
+from tools.Yaml_read import Yaml_read
+from lib.all import *
+from tools.ExcelData import *
+import time
+import win32gui
+import traceback
+import allure
+import win32con
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from tools.Base import *
+from tools.WinUpLoadFile import upload_files
+from tools.Yaml_read import Yaml_read
+import requests
+
+
 
 class Test_all(object):
     """四川分类系统"""
@@ -76,7 +94,7 @@ class Test_all(object):
         """账号管理-账号删除"""
         self.assert_result = all(driver,Data).test_account_management_delete()
 
-    @pytest.mark.test
+    #@pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_IncumbentImport"))
     @pytest.mark.run(order=201)
@@ -84,7 +102,7 @@ class Test_all(object):
         """在职人员管理-导入页面：导入操作"""
         self.assert_result = all(driver,Data).test_IncumbentImport()
 
-    @pytest.mark.test
+    #@pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_LeaversImport"))
     @pytest.mark.run(order=202)
@@ -92,10 +110,18 @@ class Test_all(object):
         """离职人员管理-导入页面：导入操作"""
         self.assert_result = all(driver,Data).test_LeaversImport()
 
-    @pytest.mark.test
+    #@pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_update_01"))
     @pytest.mark.run(order=206)
     def test_update_01(self,driver,Data):
         """个人信息修改"""
         self.assert_result = all(driver,Data).test_update_01()
+
+    @pytest.mark.test
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_LeaversManage"))
+    @pytest.mark.run(order=208)
+    def test_LeaversManage(self,driver,Data):
+        """离职人员管理"""
+        self.assert_result = all(driver,Data).test_LeaversManage()
