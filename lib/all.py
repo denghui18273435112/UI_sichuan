@@ -781,3 +781,14 @@ class all:
             self.ExcelData["actual_result"] = traceback.format_exc()
         finally:
             return self.driver,self.ExcelData
+
+    def test_delete_data(self):
+        """删除添加的数据"""
+        try:
+            time.sleep(5)
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData

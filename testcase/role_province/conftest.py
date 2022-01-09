@@ -39,11 +39,15 @@ def driver():
     option.add_experimental_option("excludeSwitches", ['enable-automation']);
     driver = webdriver.Chrome(options=option)
     driver.maximize_window()
-    login =Yaml_read("all_data.yaml","login")
-    driver.get(login["url"])
-    driver.implicitly_wait(10)
-    selenium(driver).text_input("请输入账号",login["login_account2"],type="css_1")
-    selenium(driver).text_input("请输入密码",login["login_password2"],type="css_1")
+    while True:
+        login =Yaml_read("all_data.yaml","login")
+        driver.get(login["url"])
+        if selenium(driver).list_data_number("#app > div > div.container > div > div.form > form",location_type1="div") ==12:
+            selenium(driver).text_input("请输入账号",login["login_account2"],type="css_1")
+            selenium(driver).text_input("请输入密码",login["login_password2"],type="css_1")
+            break
+        else:
+            selenium(driver).resfresh()
     while True:
         #截图验证并设别；直到验证码正常位置
         element =driver.find_element_by_css_selector('form  img')

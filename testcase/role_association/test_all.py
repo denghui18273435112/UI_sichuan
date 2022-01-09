@@ -33,6 +33,7 @@ class Test_all(object):
         assert "通过" ==self.assert_result[1]["actual_result"]
     def teardown_class(self):
         allure.attach(body="TEST-05", name="每个类结束执行一次", attachment_type=allure.attachment_type.TEXT)
+
     @pytest.mark.role_association
     @pytest.mark.run(order=6)
     @pytest.mark.parametrize("Data",ExcelData("test_tabulate_data"))

@@ -878,7 +878,7 @@ class selenium():
 
     def list_data_number(self, location="div.is-scrolling-left>table>tbody", plural=None, location_type="css selector",location_type1="tr"):
         """
-        判斷当前定位到的列表表示是否有数据
+        【用此方法】判斷当前定位到的列表表示是否有数据
         :param location: 定位
         :param plural: 复数
         :param location_type: 定位类型
