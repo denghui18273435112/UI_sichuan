@@ -76,6 +76,7 @@ class Test_all(object):
         """培训计划报送"""
         self.assert_result = all(driver,Data).PlanSubmit_01()
 
+    @pytest.mark.role_province
     @pytest.mark.run(order=9)
     @pytest.mark.parametrize("Data",ExcelData("test_query_inquire"))
     def test_query_inquire(self,driver,Data):
@@ -89,7 +90,7 @@ class Test_all(object):
         """培训学分查询"""
         self.assert_result = all(driver,Data).inquire_operation()
 
-    @pytest.mark.test
+    @pytest.mark.no
     @pytest.mark.run(order=11)
     @pytest.mark.parametrize("Data",ExcelData("test_RecordImport_01"))
     def test_RecordImport(self,driver,Data):
@@ -124,7 +125,6 @@ class Test_all(object):
         """ 培训测评-培训统计 查询操作"""
         self.assert_result = all(driver,Data).test_TrainingExam_02()
 
-    @pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_OD_inquire"))
     @pytest.mark.run(order=203)
@@ -132,7 +132,6 @@ class Test_all(object):
         """ 输入的方式单个查询"""
         self.assert_result = all(driver,Data).OD_inquire()
 
-    @pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_Batch_query_Reset"))
     @pytest.mark.run(order=204)

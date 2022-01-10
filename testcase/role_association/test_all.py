@@ -66,7 +66,7 @@ class Test_all(object):
         """培训计划报送：操作退回"""
         self.assert_result = all(driver,Data).PlanSubmit_02()
 
-    @pytest.mark.role_association
+    @pytest.mark.no
     @pytest.mark.run(order=12)
     @pytest.mark.parametrize("Data",ExcelData("test_TrainingFileManage"))
     def test_TrainingFileManage(self,driver,Data):
@@ -94,31 +94,28 @@ class Test_all(object):
         """账号管理-账号删除"""
         self.assert_result = all(driver,Data).test_account_management_delete()
 
-
-    @pytest.mark.role_province
+    @pytest.mark.role_association
     @pytest.mark.parametrize("Data",ExcelData("test_IncumbentImport"))
     @pytest.mark.run(order=201)
     def test_IncumbentImport(self,driver,Data):
         """在职人员管理-导入页面：导入操作"""
         self.assert_result = all(driver,Data).test_IncumbentImport()
 
-
-    @pytest.mark.role_province
+    @pytest.mark.role_association
     @pytest.mark.parametrize("Data",ExcelData("test_LeaversImport"))
     @pytest.mark.run(order=202)
     def test_LeaversImport(self,driver,Data):
         """离职人员管理-导入页面：导入操作"""
         self.assert_result = all(driver,Data).test_LeaversImport()
 
-    @pytest.mark.role_province
+    @pytest.mark.role_association
     @pytest.mark.parametrize("Data",ExcelData("test_update_01"))
     @pytest.mark.run(order=206)
     def test_update_01(self,driver,Data):
         """个人信息修改"""
         self.assert_result = all(driver,Data).test_update_01()
 
-
-    @pytest.mark.role_province
+    @pytest.mark.role_association
     @pytest.mark.parametrize("Data",ExcelData("test_LeaversManage"))
     @pytest.mark.run(order=208)
     def test_LeaversManage(self,driver,Data):

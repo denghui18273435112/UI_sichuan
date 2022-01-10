@@ -1,5 +1,5 @@
 ---
-#线上登录,所需 zzl-sgs-sx admin123
+#线上登录,所需 zzl-sgs-sx admin123 True False
 login:
   url: "https://sc.giiatop.com/#/PracticeCMS/Login"
   login_contrast_url: "https://sc.giiatop.com/#/PracticeCMS/Home"
@@ -10,6 +10,7 @@ login:
   province_role:  "省公司角色"
   login_account2: "zzl-sgs-sx"
   login_password2: "admin123"
+  appear_window: False
 
 #数据库连接信息
 database:

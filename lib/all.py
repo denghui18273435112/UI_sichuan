@@ -23,7 +23,7 @@ class all:
         self.data = json.loads(Data["data"])
         self.ExcelData = Data
         self.driver.url_skip(self.ExcelData["URL"])
-        print("{} 运行中.....".format(self.ExcelData["test_id"]))
+        print("\n{} 运行中.....".format(self.ExcelData["test_id"]))
         time.sleep(5)
 
     def overview_digital(self):
@@ -389,7 +389,6 @@ class all:
             return self.driver,self.ExcelData
 
 
-
     def test_CreditInquire(self):
         """培训记录统计-字段查询、按钮操作"""
         try:
@@ -468,23 +467,26 @@ class all:
         try:
             self.driver.click("培训测评","contains_text",plural=1)
             time.sleep(10)
-            self.driver.text_input("input[placeholder='请选择所属机构']",self.driver.text_get(1,"zzl_list_01"),empty=True)
-            self.driver.click("div.el-cascader__suggestion-panel.el-scrollbar > div.el-scrollbar__wrap > ul > li:nth-child(1)")
-            self.driver.drop_down_choice(2,"仅限本机构",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(2,"本机构及下级",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(7,self.driver.text_get(6,"zzl_list_01"),type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(3,"2020",type1="css_1",type2="xpath_1",plural1=0)
-            self.driver.drop_down_choice(3,"2021",type1="css_1",type2="xpath_1",plural1=0)
-            self.driver.drop_down_choice(5,"身份证",type1="css_1",type2="xpath_1",plural1=0)
-            self.driver.text_input("div:nth-child(4) > div.el-input > input[placeholder='请输入']",self.driver.text_get(2,"zzl_list_01"))
-            self.driver.text_input("div:nth-child(6) > div.el-input > input[placeholder='请输入']",self.driver.text_get(4,"zzl_list_01"))
-            self.driver.click("查询",type="starts_with_1")
-            self.driver.click("导出",type="starts_with_1")
-            self.driver.text_input("//*/span[starts-with(.,'前往')]//input",10,type="xpath",empty=True)
-            self.driver.click("模板下载",type="starts_with_1")
-            #self.driver.upload_file("批量导入查询",file_path_05,location_type="contains_text",type="no_input")
-            self.driver.upload_file("div:nth-child(8) > div > div > input",file_path_05,type="input")
-            time.sleep(5)
+            if self.driver.list_data_number() >0:
+                self.driver.text_input("input[placeholder='请选择所属机构']",self.driver.text_get(1,"zzl_list_01"),empty=True)
+                self.driver.click("div.el-cascader__suggestion-panel.el-scrollbar > div.el-scrollbar__wrap > ul > li:nth-child(1)")
+                self.driver.drop_down_choice(2,"仅限本机构",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(2,"本机构及下级",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(7,self.driver.text_get(6,"zzl_list_01"),type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(3,"2020",type1="css_1",type2="xpath_1",plural1=0)
+                self.driver.drop_down_choice(3,"2021",type1="css_1",type2="xpath_1",plural1=0)
+                self.driver.drop_down_choice(5,"身份证",type1="css_1",type2="xpath_1",plural1=0)
+                self.driver.text_input("div:nth-child(4) > div.el-input > input[placeholder='请输入']",self.driver.text_get(2,"zzl_list_01"))
+                self.driver.text_input("div:nth-child(6) > div.el-input > input[placeholder='请输入']",self.driver.text_get(4,"zzl_list_01"))
+                self.driver.click("查询",type="starts_with_1")
+                self.driver.click("导出",type="starts_with_1")
+                self.driver.text_input("//*/span[starts-with(.,'前往')]//input",10,type="xpath",empty=True)
+                self.driver.click("模板下载",type="starts_with_1")
+                #self.driver.upload_file("批量导入查询",file_path_05,location_type="contains_text",type="no_input")
+                self.driver.upload_file("div:nth-child(8) > div > div > input",file_path_05,type="input")
+                time.sleep(5)
+            else:
+                self.ExcelData["actual_result"] = "列表无数据"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -820,7 +822,9 @@ class all:
     def test_LeaversManage(self):
         """离职人员管理"""
         try:
-            self.driver.click("div.el-dialog__body  div.footer > span.primary")
+            self.driver.resfresh()
+            time.sleep(2)
+            self.driver.click("确定",type="contains_text")
             time.sleep(2)
             self.driver.text_input("div.condition-wrapper > div > div:nth-child(4) > div.el-input>input",content=self.data["nameORnumber"])
             self.driver.text_input("div.condition-wrapper > div > div:nth-child(2) > div.el-input>input",content=self.data["name"],Enter=True)

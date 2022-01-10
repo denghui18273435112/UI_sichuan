@@ -308,7 +308,7 @@ class selenium():
                 js='document.querySelectorAll("{0}")[{1}].scroll{2}={3}'.format(location, plural,Scroll_way, Scroll_position)
         elif  Scroll_type== "windows":#浏览器自带滚动条
             js = "window.scrollTo(0,{})".format(Scroll_position)
-        print(js)
+        #print(js)
         self.driver.execute_script(js)
 
 

@@ -58,6 +58,7 @@ class Test_all(object):
     def teardown_class(self):
         allure.attach(body="TEST-05", name="每个类结束执行一次", attachment_type=allure.attachment_type.TEXT)
 
+    @pytest.mark.delete_data
     @pytest.mark.parametrize("Data",ExcelData("test_delete_data"))
     @pytest.mark.run(order=9999)
     def test_delete_data(self,driver,Data):

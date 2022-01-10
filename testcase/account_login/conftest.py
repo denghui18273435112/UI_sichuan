@@ -26,8 +26,9 @@ def driver():
     # print("\n>>进入UI自动化测试环节.....>>\n")
 
     #打开浏览器
+    login =Yaml_read("all_data.yaml","login")
     option = webdriver.ChromeOptions()
-    option.headless =True
+    option.headless =login["appear_window"]
     option.add_argument('window-size=1920x1080')
     option.add_experimental_option("excludeSwitches", ['enable-automation']);
     driver = webdriver.Chrome(options=option)

@@ -33,14 +33,14 @@ def driver():
     # print("\n>>进入UI自动化测试环节.....>>\n")
 
     #打开浏览器;输入账号和密码
+    login =Yaml_read("all_data.yaml","login")
     option = webdriver.ChromeOptions()
-    option.headless =True
+    option.headless =login["appear_window"]
     option.add_argument('window-size=1920x1080')
     option.add_experimental_option("excludeSwitches", ['enable-automation']);
     driver = webdriver.Chrome(options=option)
     driver.maximize_window()
     while True:
-        login =Yaml_read("all_data.yaml","login")
         driver.get(login["url"])
         if selenium(driver).list_data_number("#app > div > div.container > div > div.form > form",location_type1="div") ==12:
             selenium(driver).text_input("请输入账号",login["login_account2"],type="css_1")
@@ -60,13 +60,13 @@ def driver():
         im = Image.open(path)
         im = im.crop((left, top, right, bottom))
         im.save(path)
-        print("\n识别的验证码:{}\n".format(verification_code()))
+        #print("\n识别的验证码:{}\n".format(verification_code()))
         selenium(driver).text_input("请输入验证码",verification_code(),type="css_1")
         selenium(driver).click("span.login-button")
         if selenium(driver).get_url() ==login["login_contrast_url"]:
             break
         driver.find_element_by_css_selector('span.login-button').click()
-    print("登录成功的cookies信息:{}\n".format(driver.get_cookies()))
+    #print("登录成功的cookies信息:{}\n".format(driver.get_cookies()))
     #time.sleep(5)
     yield driver
     driver.quit()
