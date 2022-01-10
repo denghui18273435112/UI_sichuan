@@ -15,17 +15,5 @@ data:数据/用例文件夹
 导出第三方库
 pip freeze > requirements.txt
 #######################################################################################
-Terminal
-git pull
-git pull origin masterit
-Terminal
-git pull
-git pull origin masterit
-Terminal
-git pull
-git pull origin masterit
-Terminal
-git pull
-git pull origin masterit
 
 

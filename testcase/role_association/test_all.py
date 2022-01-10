@@ -94,7 +94,7 @@ class Test_all(object):
         """账号管理-账号删除"""
         self.assert_result = all(driver,Data).test_account_management_delete()
 
-    #@pytest.mark.test
+
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_IncumbentImport"))
     @pytest.mark.run(order=201)
@@ -102,7 +102,7 @@ class Test_all(object):
         """在职人员管理-导入页面：导入操作"""
         self.assert_result = all(driver,Data).test_IncumbentImport()
 
-    #@pytest.mark.test
+
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_LeaversImport"))
     @pytest.mark.run(order=202)
@@ -110,7 +110,6 @@ class Test_all(object):
         """离职人员管理-导入页面：导入操作"""
         self.assert_result = all(driver,Data).test_LeaversImport()
 
-    #@pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_update_01"))
     @pytest.mark.run(order=206)
@@ -118,7 +117,7 @@ class Test_all(object):
         """个人信息修改"""
         self.assert_result = all(driver,Data).test_update_01()
 
-    @pytest.mark.test
+
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_LeaversManage"))
     @pytest.mark.run(order=208)
