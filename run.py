@@ -19,7 +19,7 @@ if __name__ == "__main__":
                     "-s", "./testcase/delete_data/test_all.py",
                    "-m", "not(login or no)",
                    #"-m", "test",
-                   "--maxfail=100",
+                   "--maxfail=1",
                   "--alluredir", result_path])
-    os.system("allure generate {0} -o {1} --clean".format(result_path, allure_report_path))
-    os.system("allure serve {}".format(result_path))
+    # os.system("allure generate {0} -o {1} --clean".format(result_path, allure_report_path))
+    # os.system("allure serve {}".format(result_path))

@@ -847,9 +847,11 @@ class all:
     def test_EntryPersonInquiry(self):
         """入职人员查询"""
         try:
+            self.driver.resfresh()
+            time.sleep(2)
             self.driver.click("div.condition div:nth-child(14)")
             self.driver.text_input("div.container textarea", self.data["nameORnumber"])
-            self.driver.click("div.container div.footer span:nth-child(2)")
+            self.driver.click("提交",type="contains_text")
             data = self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody")
             if  data >=4:
                 self.driver.click("导出",type="contains_text")
@@ -943,6 +945,7 @@ class all:
             self.driver.click("div.btns > span.zzl-button.primary")
             #列表操作
             self.driver.resfresh()
+            time.sleep(5)
             data = self.driver.list_data_number("div>table.el-table__body>tbody")
             if  data >=1:
                 self.driver.click("导出",type="contains_text")

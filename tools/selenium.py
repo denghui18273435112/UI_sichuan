@@ -240,14 +240,14 @@ class selenium():
     def click(self, location,type="css",plural=None):
         """
         【用此方法】点击
-        :param location: 定位
+        :param location: 定位  ；常用：contains_text
         """
         #非复数范畴
         if plural==None:
-            if type =="starts-with":
-                element = self.driver.find_element_by_xpath("//[starts-with(.,'{}')]".format(location))
-            elif type == "contains_text":
+            if type == "contains_text":
                 element = self.driver.find_element_by_xpath("//*[contains(text(),'{}')]".format(location))
+            elif type =="starts-with":
+                element = self.driver.find_element_by_xpath("//[starts-with(.,'{}')]".format(location))
             elif type == "starts_with_1":
                 element = self.driver.find_element_by_xpath("//*/span[starts-with(.,'{}')]".format(location))
             elif type == "css":
