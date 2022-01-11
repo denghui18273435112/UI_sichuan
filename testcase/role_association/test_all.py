@@ -121,3 +121,40 @@ class Test_all(object):
     def test_LeaversManage(self,driver,Data):
         """离职人员管理"""
         self.assert_result = all(driver,Data).test_LeaversManage()
+
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_EntryPersonInquiry_01"))
+    @pytest.mark.run(order=209)
+    def test_EntryPersonInquiry(self,driver,Data):
+        """入职人员查询"""
+        self.assert_result = all(driver,Data).test_EntryPersonInquiry()
+
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_OnJobPersonInquiry"))
+    @pytest.mark.run(order=210)
+    def test_OnJobPersonInquiry(self,driver,Data):
+        """在职人员查询"""
+        self.assert_result = all(driver,Data).test_OnJobPersonInquiry()
+
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_ResignPersonInquiry"))
+    @pytest.mark.run(order=210)
+    def test_ResignPersonInquiry(self,driver,Data):
+        """离职人员查询"""
+        self.assert_result = all(driver,Data).test_ResignPersonInquiry()
+
+    @pytest.mark.test
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_ProfessionRecordSend"))
+    @pytest.mark.run(order=210)
+    def test_ProfessionRecordSend(self,driver,Data):
+        """执业备案报送"""
+        self.assert_result = all(driver,Data).test_ProfessionRecordSend()
+
+    @pytest.mark.test
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_ProfessionRecordStatistics"))
+    @pytest.mark.run(order=210)
+    def test_ProfessionRecordStatistics(self,driver,Data):
+        """执业备案统计"""
+        self.assert_result = all(driver,Data).test_ProfessionRecordStatistics()

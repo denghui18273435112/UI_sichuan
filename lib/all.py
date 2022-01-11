@@ -843,3 +843,111 @@ class all:
             self.ExcelData["actual_result"] = traceback.format_exc()
         finally:
             return self.driver,self.ExcelData
+
+    def test_EntryPersonInquiry(self):
+        """入职人员查询"""
+        try:
+            self.driver.click("div.condition div:nth-child(14)")
+            self.driver.text_input("div.container textarea", self.data["nameORnumber"])
+            self.driver.click("div.container div.footer span:nth-child(2)")
+            data = self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody")
+            if  data >=4:
+                self.driver.click("导出",type="contains_text")
+                for x in range(1,data+1):
+                    self.driver.click("div.el-table__fixed-body-wrapper tbody>tr:nth-child({0})>td svg".format(x),plural=1)
+                    self.driver.screenShots()
+                    self.driver.back()
+                    time.sleep(1)
+            else:
+                self.ExcelData["actual_result"]="查询无数据"
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+    def test_OnJobPersonInquiry(self):
+        """在职人员查询"""
+        try:
+            self.driver.resfresh()
+            time.sleep(1)
+            self.driver.click("div.condition div:nth-child(16)")
+            self.driver.text_input("div.container textarea", self.data["nameORnumber"])
+            self.driver.click("span.zzl-button.primary",plural=1)
+            time.sleep(1)
+            data = self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody")
+            if  data >=2:
+                self.driver.click("导出",type="contains_text")
+                for x in range(1,data+1):
+                    self.driver.click("div.el-table__fixed-body-wrapper tbody>tr:nth-child({0})>td svg".format(x),plural=1)
+                    self.driver.screenShots()
+                    self.driver.back()
+                    time.sleep(1)
+            else:
+                self.ExcelData["actual_result"]="查询无数据"
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+    def test_ResignPersonInquiry(self):
+        """离职人员查询"""
+        try:
+            self.driver.resfresh()
+            time.sleep(1)
+            self.driver.click("div.condition div:nth-child(14)")
+            self.driver.text_input("div.container textarea", self.data["nameORnumber"])
+            self.driver.click("span.zzl-button.primary",plural=1)
+            time.sleep(1)
+            data = self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody")
+            if  data >=2:
+                self.driver.click("导出",type="contains_text")
+                for x in range(1,data+1):
+                    self.driver.click("div.el-table__fixed-body-wrapper tbody>tr:nth-child({0})>td svg".format(x),plural=1)
+                    self.driver.screenShots()
+                    self.driver.back()
+                    time.sleep(1)
+            else:
+                self.ExcelData["actual_result"]="查询无数据"
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+    def test_ProfessionRecordSend(self):
+        """执业备案报送"""
+        try:
+            self.driver.resfresh()
+            data = self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody")
+            if  data >=1:
+                self.driver.click("导出",type="contains_text")
+                time.sleep(1)
+            else:
+                self.ExcelData["actual_result"]="查询无数据"
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+    def test_ProfessionRecordStatistics(self):
+        """执业备案统计"""
+        try:
+            data = self.driver.list_data_number("div.table > div > div.is-scrolling-none > table > tbody")
+            if  data >=1:
+                self.driver.click("导出",type="contains_text")
+                time.sleep(1)
+            else:
+                self.ExcelData["actual_result"]="查询无数据"
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
