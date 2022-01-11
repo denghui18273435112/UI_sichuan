@@ -923,7 +923,8 @@ class all:
         """执业备案报送"""
         try:
             self.driver.resfresh()
-            data = self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody")
+            time.sleep(2)
+            data = self.driver.list_data_number("div>table.el-table__body>tbody")
             if  data >=1:
                 self.driver.click("导出",type="contains_text")
                 time.sleep(1)
