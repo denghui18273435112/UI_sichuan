@@ -153,6 +153,17 @@ class Test_all(object):
         """在职人员管理"""
         self.assert_result = all(driver,Data).test_IncumbentManage()
 
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_ProfessionRecordSend_01"))
+    @pytest.mark.run(order=210)
+    def test_ProfessionRecordSend(self,driver,Data):
+        """执业备案报送"""
+        self.assert_result = all(driver,Data).test_ProfessionRecordSend_01()
 
-
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_ProfessionRecordStatistics"))
+    @pytest.mark.run(order=211)
+    def test_ProfessionRecordStatistics(self,driver,Data):
+        """执业备案统计"""
+        self.assert_result = all(driver,Data).test_ProfessionRecordStatistics()
 

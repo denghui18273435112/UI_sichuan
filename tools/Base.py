@@ -27,18 +27,17 @@ def init_db(db_alias='db_1'):
     return  conn
 
 
-def time_YmdHMS(YmdHMS=True):
+def time_YmdHMS(type=1):
     """
     返回当前时间，支持两个格式
     True：%Y%m%d%H%M%S
     False：%Y%m%d
     :return:current_time
     """
-    now_time = datetime.now()
-    if YmdHMS:
-        current_time = now_time.strftime("%Y%m%d%H%M%S")
-    else:
-        current_time = now_time.strftime("%Y%m%d")
+    if type ==1:
+        current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+    elif type ==2:
+        current_time = datetime.now().strftime("%Y-%m-%d")
     return   current_time
 
 

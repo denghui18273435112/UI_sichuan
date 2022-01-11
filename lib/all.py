@@ -919,15 +919,33 @@ class all:
         finally:
             return self.driver,self.ExcelData
 
-    def test_ProfessionRecordSend(self):
+    def test_ProfessionRecordSend_01(self):
         """执业备案报送"""
         try:
+            #零报告
+            # self.driver.click("零报告",type="contains_text",plural=1)
+            # self.driver.text_input("请输入报送人",type="css_1",content="自动化数据1206")
+            # self.driver.text_input("请输入联系方式",type="css_1",content="18273435112")
+            # self.driver.text_input("开始日期",type="css_1",content="2022-01-01",plural=1)
+            # self.driver.text_input("结束日期",type="css_1",content="{}".format(time_YmdHMS(2)),plural=1,Enter=True)
+            # self.driver.text_input("div.container textarea", "自动化数据")
+            # self.driver.screenShots("零报告")
+            # self.driver.click("添加",type="contains_text")
+            #职业备案
+            self.driver.click("div.condition>div:nth-child(7)")
+            self.driver.text_input("请输入报送人",type="css_1",content="自动化数据1206")
+            self.driver.text_input("请输入联系方式",type="css_1",content="18273435112")
+            self.driver.text_input("开始日期",type="css_1",content="2022-01-01")
+            self.driver.text_input("结束日期",type="css_1",content="{}".format(time_YmdHMS(2)),Enter=True)
+            self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_08,plural=0,type="input")
+            self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_09,plural=1,type="input")
+            self.driver.screenShots("零报告")
+            self.driver.click("div.btns > span.zzl-button.primary")
+            #列表操作
             self.driver.resfresh()
-            time.sleep(2)
             data = self.driver.list_data_number("div>table.el-table__body>tbody")
             if  data >=1:
                 self.driver.click("导出",type="contains_text")
-                time.sleep(1)
             else:
                 self.ExcelData["actual_result"]="查询无数据"
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
@@ -943,7 +961,33 @@ class all:
             data = self.driver.list_data_number("div.table > div > div.is-scrolling-none > table > tbody")
             if  data >=1:
                 self.driver.click("导出",type="contains_text")
-                time.sleep(1)
+            else:
+                self.ExcelData["actual_result"]="查询无数据"
+            #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+    def test_ProfessionRecordSend_02(self):
+        """执业备案报送"""
+        try:
+            self.driver.resfresh()
+            data = self.driver.list_data_number("div>table.el-table__body>tbody")
+            if  data >=2:
+                self.driver.click("导出",type="contains_text")
+                for x in range(1,data+1):
+                    name =self.driver.text_get("div.el-table__body-wrapper tr:nth-child({0}) > td:nth-child(3) > div".format(x))
+                    if name == "自动化数据1206":
+                        self.driver.click("div.el-table__body-wrapper > table > tbody > tr:nth-child({0})>td:nth-child(8) span".format(x),plural=0)
+                        self.driver.back()
+                        self.driver.resfresh()
+                        self.driver.click("div.el-table__body-wrapper > table > tbody > tr:nth-child({0})>td:nth-child(8) span".format(x),plural=1)
+                        self.driver.click(" button.el-button--primary")
+                        self.driver.screenShots("删除")
+                        time.sleep(2)
+                        break
             else:
                 self.ExcelData["actual_result"]="查询无数据"
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常

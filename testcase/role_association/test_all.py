@@ -143,16 +143,10 @@ class Test_all(object):
         """离职人员查询"""
         self.assert_result = all(driver,Data).test_ResignPersonInquiry()
 
-    @pytest.mark.role_association
-    @pytest.mark.parametrize("Data",ExcelData("test_ProfessionRecordSend"))
-    @pytest.mark.run(order=210)
-    def test_ProfessionRecordSend(self,driver,Data):
-        """执业备案报送"""
-        self.assert_result = all(driver,Data).test_ProfessionRecordSend()
 
     @pytest.mark.role_association
-    @pytest.mark.parametrize("Data",ExcelData("test_ProfessionRecordStatistics"))
-    @pytest.mark.run(order=210)
-    def test_ProfessionRecordStatistics(self,driver,Data):
-        """执业备案统计"""
-        self.assert_result = all(driver,Data).test_ProfessionRecordStatistics()
+    @pytest.mark.parametrize("Data",ExcelData("test_ProfessionRecordSend_02"))
+    @pytest.mark.run(order=212)
+    def test_ProfessionRecordSend(self,driver,Data):
+        """执业备案报送：协会查看、删除"""
+        self.assert_result = all(driver,Data).test_ProfessionRecordSend_02()

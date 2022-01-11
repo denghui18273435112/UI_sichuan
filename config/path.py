@@ -28,4 +28,8 @@ file_path_04= file_path+os.sep+"华海财险培训教材.pdf"
 file_path_05= import_file_path+os.sep+"03培训测评批量查询模板.xlsx"
 file_path_06= import_file_path+os.sep+"04四川在职人员导入模板.xlsx"
 file_path_07= import_file_path+os.sep+"05四川离职人员导入模板.xlsx"
+file_path_08= import_file_path+os.sep+"06保险销售从业人员登记备案情况汇总表.xlsx"
+file_path_09= file_path+os.sep+"标准版本.pdf"
+
+
 

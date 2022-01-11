@@ -46,6 +46,7 @@ class selenium():
     def resfresh(self):
         """刷新页面"""
         self.driver.refresh()
+        time.sleep(2)
 
     def open_url(self, url):
         """打开url站点"""
@@ -231,7 +232,7 @@ class selenium():
             else:
                 location_new1 =self.driver.find_elements_by_css_selector(location)[plural]
             location_new1.send_keys(photo)
-            time.sleep(3)
+        time.sleep(10)
 
     def switch_to(self):
         self.driver.switch_to.alert.text()
@@ -251,6 +252,8 @@ class selenium():
                 element = self.driver.find_element_by_xpath("//*/span[starts-with(.,'{}')]".format(location))
             elif type == "css":
                 element = self.driver.find_element_by_css_selector(location)
+            elif type == "css_1":
+                element = self.driver.find_element_by_css_selector("input[placeholder='{}']".format(location))
             elif type == "xpath":
                 element = self.driver.find_element_by_xpath(location)
             elif type == "figure":
@@ -273,7 +276,7 @@ class selenium():
             elif type == "xpath":
                 element = self.driver.find_elements_by_xpath(location)[plural]
             element.click()
-        time.sleep(2)
+        time.sleep(3)
 
     def screenShots(self, name_screenshot="截图"):
         """【用此方法】截图@param name_screenshot:截图名称或图片名称"""
@@ -889,6 +892,7 @@ class selenium():
         :param  location_type1：标签名称
         :return: 返回列表数据的条数；支持等于0
         """
+        time.sleep(1)
         if plural == None:
             new_location = self.driver.find_element(location_type,location)
         else:
