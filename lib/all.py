@@ -570,20 +570,26 @@ class all:
         finally:
             return self.driver,self.ExcelData
 
-
-
-######################################################诚信相关模块######################################################
+######################################################诚信相关模块###############################################################################
     def OD_inquire(self):
         """个人信息查询-单个查询"""
         try:
             self.driver.text_input(location="请输入姓名",content=self.data["name"],type="css_1")
             self.driver.drop_down_choice(location1="div:nth-child(2) > div.el-select  span > i", location2=self.data["type"], type2="starts_with")
             self.driver.text_input(location="请输入证件号码",content=self.data["number"],type="css_1",Enter=True)
-            if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") >=1:
-                self.driver.click(16,"zzl_list_02")
-                self.driver.back()
+            if  self.ExcelData["actual_result"] != "test_OD_inquire_05":
+                if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") >=1:
+                    name = self.driver.text_get(1,type="zzl_list_01")
+                    type = self.driver.text_get(8,type="zzl_list_01")
+                    number = self.driver.text_get(9,type="zzl_list_01")
+                    if name == self.data["name"] and  type == self.data["type"] and  number == self.data["number"]:
+                        self.driver.click(16,"zzl_list_02")
+                        self.driver.back()
+                    else:
+                        self.ExcelData["actual_result"] = "条件查询与列表渲染数据不一致"
             else:
-                self.ExcelData["actual_result"] = "当前查询列表无数据"
+                if  self.driver.text_get("div.el-message>p")!="查询条件无对应数据":
+                    self.ExcelData["actual_result"] = "没有弹出提示信息"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -597,9 +603,7 @@ class all:
             self.driver.click("div.condition div:nth-child(6)")
             self.driver.text_input("div.container textarea", self.data["nameORnumber"])
             self.driver.click("div.container div.footer span:nth-child(2)")
-            if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") >=4:
-                pass
-            else:
+            if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") !=4:
                 self.ExcelData["actual_result"] = "当前查询列表无数据"
        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:

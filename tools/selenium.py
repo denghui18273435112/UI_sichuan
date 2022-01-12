@@ -72,12 +72,16 @@ class selenium():
         """
         if type == "css":
             new_location = self.driver.find_element_by_css_selector(location)
+        elif type == "css_1":#提示文本
+            new_location = self.driver.find_element_by_xpath("div.el-message>p")
         elif type == "xpath":
             new_location = self.driver.find_element_by_xpath(location)
         elif type == "zzl_list_01":#非悬浮
-            new_location = self.driver.find_element_by_css_selector("div.el-table__body-wrapper tbody>tr:nth-child({0})>td:nth-child({1})".format(location1,location))
+            new_location = self.driver.find_element_by_css_selector("div.el-table__body-wrapper tbody>tr:nth-child({0})>td:nth-child({1})".
+                                                                    format(location1,location))
         elif type == "zzl_list_02":#悬浮
-            new_location = self.driver.find_element_by_css_selector("div.el-table__fixed-body-wrapper tbody>tr:nth-child({0})>td:nth-child({1})".format(location1,location))
+            new_location = self.driver.find_element_by_css_selector("div.el-table__fixed-body-wrapper tbody>tr:nth-child({0})>td:nth-child({1})".
+                                                                    format(location1,location))
         return new_location.text
 
     def text_input(self,location,content,plural=None,Enter=False,empty=False,type="css"):
