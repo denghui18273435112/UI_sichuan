@@ -124,7 +124,7 @@ class Test_all(object):
         """ 培训测评-培训统计 查询操作"""
         self.assert_result = all(driver,Data).test_TrainingExam_02()
 
-    # @pytest.mark.test
+    @pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_OD_inquire"))
     @pytest.mark.run(order=203)
@@ -132,7 +132,7 @@ class Test_all(object):
         """ 输入的方式单个查询"""
         self.assert_result = all(driver,Data).OD_inquire()
 
-    # @pytest.mark.test
+    @pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_Batch_query_Reset"))
     @pytest.mark.run(order=204)
@@ -140,7 +140,7 @@ class Test_all(object):
         """ 批量查询"""
         self.assert_result = all(driver,Data).Batch_query_Reset()
 
-    # @pytest.mark.test
+    @pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_import_query"))
     @pytest.mark.run(order=205)
