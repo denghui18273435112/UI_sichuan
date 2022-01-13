@@ -148,6 +148,7 @@ class Test_all(object):
         """导入查询"""
         self.assert_result = all(driver,Data).import_query()
 
+    #@pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.parametrize("Data",ExcelData("test_IncumbentManage"))
     @pytest.mark.run(order=207)
@@ -168,4 +169,13 @@ class Test_all(object):
     def test_ProfessionRecordStatistics(self,driver,Data):
         """执业备案统计"""
         self.assert_result = all(driver,Data).test_ProfessionRecordStatistics()
+
+    # @pytest.mark.test
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_LicenseImportTrack_01"))
+    @pytest.mark.run(order=213)
+    def test_LicenseImportTrack(self,driver,Data):
+        """导入数据统计：所有的操作"""
+        self.assert_result = all(driver,Data).test_LicenseImportTrack_01()
+
 

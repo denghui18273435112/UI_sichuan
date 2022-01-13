@@ -253,7 +253,7 @@ class selenium():
             if type == "contains_text":
                 element = self.driver.find_element_by_xpath("//*[contains(text(),'{}')]".format(location))
             elif type =="starts-with":
-                element = self.driver.find_element_by_xpath("//[starts-with(.,'{}')]".format(location))
+                element = self.driver.find_element_by_xpath("//*[starts-with(.,'{}')]".format(location))
             elif type == "starts_with_1":
                 element = self.driver.find_element_by_xpath("//*/span[starts-with(.,'{}')]".format(location))
             elif type == "css":

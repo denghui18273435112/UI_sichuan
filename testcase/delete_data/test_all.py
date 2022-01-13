@@ -34,7 +34,8 @@ def teardown_module():
     body = requests.post(url=url,json=data,headers=header)
     token = "{0}={1}".format("sc.maintain.token",body.cookies["sc.maintain.token"])
     allure.attach(body=token, name="登录后拼接的token", attachment_type=allure.attachment_type.TEXT)
-    #身份证查询个人信息
+
+    #身份证查询个人信息 删除
     for x in ["431225199212061818","M30102575","362130197312312425","HO4983324"]:
         url1 = "http://sc.maintain.giiatop.com/api/member/DeleteMember"
         data1= {"idNumber":"{}".format(x)}

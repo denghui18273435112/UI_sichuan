@@ -823,11 +823,22 @@ class all:
     def test_IncumbentManage(self):
         """在职人员管理"""
         try:
+            #批量查询
             self.driver.click("批量查询",type="contains_text")
             self.driver.text_input("div.container textarea", self.data["nameORnumber"])
             self.driver.click("div.el-dialog__body span.zzl-button.primary:nth-child(2)")
-            if self.driver.list_data_number() ==2:
+            time.sleep(5)
+            list_data_number =self.driver.list_data_number("div.is-scrolling-left.el-table__body-wrapper>table>tbody")
+            get_list = []
+            ExcelData_list = self.data["nameORnumber"].split("\n")
+            if  list_data_number==2:
                 self.driver.click("导出",type="contains_text")
+                for x in range(1,list_data_number+1):
+                    get_list.append(self.driver.text_get(location1=x,location=8,type="zzl_list_01"))
+            if  ExcelData_list != get_list:
+                self.ExcelData["actual_result"] = "列表数据不一致"
+            self.driver.screenShots()
+            #单个查询
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -1010,6 +1021,41 @@ class all:
             else:
                 self.ExcelData["actual_result"]="查询无数据"
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+
+    def test_LicenseImportTrack_01(self):
+        """导入数据统计：所有的操作"""
+        try:
+            self.driver.click("导入数据统计",type="contains_text",plural=0)
+            self.driver.click("div.condition div:nth-child(7)")
+            self.driver.click("div.condition div:nth-child(6)")
+            if self.driver.list_data_number("div.el-table__body-wrapper.is-scrolling-none>table>tbody")==2:
+                self.driver.click("导出",type="contains_text")
+                if self.driver.text_get(2,type="zzl_list_01") ==0 and  self.driver.text_get(3,type="zzl_list_01")==0:
+                    self.ExcelData["actual_result"] = "列表报告数据异常"
+            else:
+                    self.ExcelData["actual_result"] = "列表数据异常"
+        except BaseException:
+            traceback.print_exc()
+            self.ExcelData["actual_result"] = traceback.format_exc()
+        finally:
+            return self.driver,self.ExcelData
+
+    def test_LicenseImportTrack_02(self):
+        """执业证导入追踪：所有的操作"""
+        try:
+            self.driver.click("执业证导入追踪",type="contains_text",plural=2)
+            self.driver.click("div.condition-wrapper  div:nth-child(4)")
+            self.driver.click("div.condition-wrapper  div:nth-child(3)",plural=1)
+            if self.driver.list_data_number("div.el-table__body-wrapper.is-scrolling-none>table>tbody")>=1:
+                self.driver.click("导出",type="contains_text")
+            else:
+                    self.ExcelData["actual_result"] = "列表数据异常"
         except BaseException:
             traceback.print_exc()
             self.ExcelData["actual_result"] = traceback.format_exc()

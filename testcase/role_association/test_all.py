@@ -150,3 +150,11 @@ class Test_all(object):
     def test_ProfessionRecordSend(self,driver,Data):
         """执业备案报送：协会查看、删除"""
         self.assert_result = all(driver,Data).test_ProfessionRecordSend_02()
+
+    # @pytest.mark.test
+    @pytest.mark.role_province
+    @pytest.mark.parametrize("Data",ExcelData("test_LicenseImportTrack_02"))
+    @pytest.mark.run(order=214)
+    def test_LicenseImportTrack(self,driver,Data):
+        """执业证导入追踪：所有的操作"""
+        self.assert_result = all(driver,Data).test_LicenseImportTrack_02()
