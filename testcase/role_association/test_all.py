@@ -93,21 +93,21 @@ class Test_all(object):
     def test_account_management_delete(self,driver,Data):
         """账号管理-账号删除"""
         self.assert_result = all(driver,Data).test_account_management_delete()
-    @pytest.mark.test
+    #@pytest.mark.test
     @pytest.mark.role_association
     @pytest.mark.parametrize("Data",ExcelData("test_IncumbentImport"))
     @pytest.mark.run(order=201)
     def test_IncumbentImport(self,driver,Data):
         """在职人员管理-导入页面：导入操作"""
         self.assert_result = all(driver,Data).test_IncumbentImport()
-    @pytest.mark.test
+    #@pytest.mark.test
     @pytest.mark.role_association
     @pytest.mark.parametrize("Data",ExcelData("test_LeaversImport"))
     @pytest.mark.run(order=202)
     def test_LeaversImport(self,driver,Data):
         """离职人员管理-导入页面：导入操作"""
         self.assert_result = all(driver,Data).test_LeaversImport()
-
+    #@pytest.mark.test
     @pytest.mark.role_association
     @pytest.mark.parametrize("Data",ExcelData("test_update_01"))
     @pytest.mark.run(order=206)

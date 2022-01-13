@@ -65,15 +65,17 @@ class selenium():
         """获取当前页面的url"""
         return self.driver.current_url
 
-    def text_get(self, location, type="css",location1=1):
+    def text_get(self, location=None, type="css",location1=1):
         """
         【用此方法】获取文本信息
         :return:
         """
         if type == "css":
             new_location = self.driver.find_element_by_css_selector(location)
-        elif type == "css_1":#提示文本
+        elif type == "css_1":#获取弹出的提示文本
             new_location = self.driver.find_element_by_xpath("div.el-message>p")
+        elif type == "css_2":#获取弹出的提示文本
+            new_location = self.driver.find_element_by_css_selector("div.el-message>p")
         elif type == "xpath":
             new_location = self.driver.find_element_by_xpath(location)
         elif type == "zzl_list_01":#非悬浮
@@ -190,7 +192,7 @@ class selenium():
         @param location1: 定位图片上传位置
         @param photo: 图片文件的名称;直接传file下的文件名称即可
         """
-        #非input类型
+        #非input类型的文件上传
         if type!= "input":
             if plural == None:
                 if location_type=="css":
@@ -229,14 +231,14 @@ class selenium():
             win32gui.SendMessage(edit, win32con.WM_SETTEXT, None, photo)  # 发送文件路径
             win32gui.SendMessage(dialog, win32con.WM_COMMAND, 1, button)  # 点击打开按钮
             time.sleep(3)
-        #input类型
+        #input类型 文件上传
         else:
             if plural == None:
                 location_new1 = self.driver.find_element_by_css_selector(location)
             else:
                 location_new1 =self.driver.find_elements_by_css_selector(location)[plural]
             location_new1.send_keys(photo)
-        time.sleep(10)
+        time.sleep(5)
 
     def switch_to(self):
         self.driver.switch_to.alert.text()
@@ -280,7 +282,7 @@ class selenium():
             elif type == "xpath":
                 element = self.driver.find_elements_by_xpath(location)[plural]
             element.click()
-        time.sleep(3)
+        time.sleep(2)
 
     def screenShots(self, name_screenshot="截图"):
         """【用此方法】截图@param name_screenshot:截图名称或图片名称"""

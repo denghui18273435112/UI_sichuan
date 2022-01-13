@@ -605,6 +605,11 @@ class all:
             self.driver.click("div.container div.footer span:nth-child(2)")
             if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") !=4:
                 self.ExcelData["actual_result"] = "当前查询列表无数据"
+            self.driver.screenShots()
+            self.driver.click("div.condition span.zzl-button",plural=1)
+            if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") !=0:
+                self.ExcelData["actual_result"] = "当前查询列表渲染数据"
+            self.driver.screenShots()
        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -619,9 +624,7 @@ class all:
             self.driver.upload_inputType("div:nth-child(2) div > div:nth-child(8)  input",file_path_02)
             time.sleep(5)
             self.driver.click("导出",type="contains_text")
-            if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") >=4:
-                pass
-            else:
+            if  self.driver.list_data_number("div.is-scrolling-left>table.el-table__body>tbody") !=4:
                 self.ExcelData["actual_result"] = "当前查询列表无数据"
        #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
@@ -782,14 +785,23 @@ class all:
             self.driver.click("div.condition span",plural=6)
             self.driver.text_input("div.container textarea", self.data["nameORnumber"])
             self.driver.click("div.el-dialog__body span.zzl-button.primary:nth-child(2)")
-            self.driver.click("导出",type="contains_text")
-            for x in range(1,5):
+            list_data_number = self.driver.list_data_number(location="div.el-table__body-wrapper > table > tbody")
+            if  list_data_number >=4:
+                self.driver.click("导出",type="contains_text")
+                #进入个人档案和修改信息
+                for x in range(1,list_data_number+1):
                     self.driver.click("div.el-table__fixed-body-wrapper tbody>tr:nth-child({})>td:nth-child(13) svg:nth-child(1)".format(x))
                     self.driver.back()
                     self.driver.click("div.el-table__fixed-body-wrapper tbody>tr:nth-child({})>td:nth-child(13) svg:nth-child(2)".format(x))
+                    self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_10,plural=0,type="input")
+                    self.driver.screenShots("图片上传")
                     self.driver.click("div.el-dialog__body  div.footer > span.primary",plural=1)
+                    msg = self.driver.text_get("div.el-message>p",type="css_2")
+                    if msg != "修改成功":
+                        self.ExcelData["actual_result"] = "修改失败"
                     self.driver.screenShots("成功修改信息")
-                    time.sleep(3)
+            else:
+                self.ExcelData["actual_result"] = "当前列表没有数据"
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
