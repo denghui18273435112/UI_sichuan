@@ -44,6 +44,31 @@ def teardown_module():
         body1.json()
         allure.attach(body=json.dumps(body1.json()), name="身份证查询个人信息查询返回的数据", attachment_type=allure.attachment_type.TEXT)
 
+    #获取列表档案信息档案
+    url2 = "http://sc.maintain.giiatop.com/api/member/GetMemberTriningOffline"
+    data2= {"year":2022,"className":"","pageNum":1,"pageSize":20,"total":5,"createdTime":[]}
+    header2 = {"Cookie":token}
+    body2 = requests.post(url=url2,json=data2,headers=header2)
+    body2.json()
+    allure.attach(body=json.dumps(body2.json()), name="获取档案的列表数据", attachment_type=allure.attachment_type.TEXT)
+
+    #获取需要删除的数据id
+    delete_id = 0
+    len_s= body2.json()["data"]["list"]
+    for x  in range(len(len_s)):
+        if  len_s[x]["className"] == "测试数据20138":
+            delete_id = len_s[x]["id"]
+            break
+    #删除档案数据
+    if  delete_id != 0:
+        url3 = "http://sc.maintain.giiatop.com/api/home/TrainingClear"
+        data3= {"ids":[delete_id]}
+        header3 = {"Cookie":token}
+        body3 = requests.post(url=url3,json=data3,headers=header3)
+        body3.json()
+        allure.attach(body=json.dumps(body3.json()), name="删除档案数据", attachment_type=allure.attachment_type.TEXT)
+    print("没有可删除的档案数据")
+
 class Test_all(object):
     """四川分类系统"""
     def setup_class(self):

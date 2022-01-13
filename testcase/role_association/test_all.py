@@ -70,7 +70,7 @@ class Test_all(object):
     @pytest.mark.run(order=12)
     @pytest.mark.parametrize("Data",ExcelData("test_TrainingFileManage"))
     def test_TrainingFileManage(self,driver,Data):
-        """ 培训档案管理"""
+        """ 培训档案管理：审核导入数据"""
         self.assert_result = all(driver,Data).test_TrainingFileManage()
 
     @pytest.mark.role_association

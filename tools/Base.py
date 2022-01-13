@@ -2,7 +2,7 @@
 import os
 import subprocess
 from datetime import  datetime
-
+import allure
 from config import Conf
 from config.Conf import *
 from tools.Allure import alluer
