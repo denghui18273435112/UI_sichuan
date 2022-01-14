@@ -53,21 +53,21 @@ def teardown_module():
     allure.attach(body=json.dumps(body2.json()), name="获取档案的列表数据", attachment_type=allure.attachment_type.TEXT)
 
     #获取需要删除的数据id
-    delete_id = 0
+    delete_id = []
     len_s= body2.json()["data"]["list"]
     for x  in range(len(len_s)):
         if  len_s[x]["className"] == "测试数据20138":
-            delete_id = len_s[x]["id"]
-            break
+            delete_id.append(len_s[x]["id"])
+
     #删除档案数据
-    if  delete_id != 0:
+    for x  in delete_id:
         url3 = "http://sc.maintain.giiatop.com/api/home/TrainingClear"
-        data3= {"ids":[delete_id]}
+        data3= {"ids":[x]}
         header3 = {"Cookie":token}
         body3 = requests.post(url=url3,json=data3,headers=header3)
         body3.json()
         allure.attach(body=json.dumps(body3.json()), name="删除档案数据", attachment_type=allure.attachment_type.TEXT)
-    print("没有可删除的档案数据")
+
 
 class Test_all(object):
     """四川分类系统"""
@@ -84,6 +84,7 @@ class Test_all(object):
     def teardown_class(self):
         allure.attach(body="TEST-05", name="每个类结束执行一次", attachment_type=allure.attachment_type.TEXT)
 
+    # @pytest.mark.test
     @pytest.mark.delete_data
     @pytest.mark.parametrize("Data",ExcelData("test_delete_data"))
     @pytest.mark.run(order=9999)

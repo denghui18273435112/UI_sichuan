@@ -89,7 +89,7 @@ class Test_all(object):
         """培训学分查询"""
         self.assert_result = all(driver,Data).inquire_operation()
 
-    @pytest.mark.no
+    # @pytest.mark.test
     @pytest.mark.run(order=11)
     @pytest.mark.parametrize("Data",ExcelData("test_RecordImport_01"))
     def test_RecordImport(self,driver,Data):
@@ -123,6 +123,23 @@ class Test_all(object):
     def test_TrainingExam_02(self,driver,Data):
         """ 培训测评-培训统计 查询操作"""
         self.assert_result = all(driver,Data).test_TrainingExam_02()
+
+    # @pytest.mark.test
+    @pytest.mark.role_association
+    @pytest.mark.parametrize("Data",ExcelData("test_IncumbentImport"))
+    @pytest.mark.run(order=201)
+    def test_IncumbentImport(self,driver,Data):
+        """在职人员管理-导入页面：导入操作"""
+        self.assert_result = all(driver,Data).test_IncumbentImport()
+
+    # @pytest.mark.test
+    @pytest.mark.role_association
+    @pytest.mark.parametrize("Data",ExcelData("test_LeaversImport"))
+    @pytest.mark.run(order=202)
+    def test_LeaversImport(self,driver,Data):
+        """离职人员管理-导入页面：导入操作"""
+        self.assert_result = all(driver,Data).test_LeaversImport()
+
 
     #@pytest.mark.test
     @pytest.mark.role_province

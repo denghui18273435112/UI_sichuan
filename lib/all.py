@@ -373,7 +373,7 @@ class all:
             self.driver.text_input("div:nth-child(1) > div:nth-child(5) > div > div > div > input","测试数据4")
             self.driver.click("选择课程大纲",type="contains_text")
             self.driver.drop_down_choice(" div:nth-child(1) > div:nth-child(1) > div > div > span > span > i","B类：商业非车险执业合规培训",type2="contains_text_2")
-            self.driver.drop_down_choice(" div:nth-child(1) > div:nth-child(2) > div > div > span > span > i","商业非车险-信用保证保险",type2="contains_text_2")
+            self.driver.drop_down_choice(" div:nth-child(1) > div:nth-child(2) > div > div > span > span > i","信用保证保险",type2="contains_text_2")
             for x in range(1,10):
                 self.driver.click("label:nth-child({}) > span.el-checkbox__input > span".format(x))
             self.driver.click("确定",type="contains_text")
@@ -422,25 +422,23 @@ class all:
                 if name ==self.data["delete_name"]:
                     self.driver.click("div.el-table__body-wrapper tbody>tr:nth-child({})>td:nth-child(1)".format(x))
                     self.driver.click("审核",type="contains_text",plural=4)
-                    self.driver.click("拒绝",type="contains_text")
-                    self.driver.text_input("请输入内容","审核失败",type="css_1")
-                    self.driver.click("确 定",type="contains_text")
+                    self.driver.click("通过",type="contains_text")
                     self.driver.back()
                     break
                 else:
                     self.ExcelData["actual_result"] = "尚未找到需要删除的用户信息"
-            self.driver.drop_down_choice(4,"审核拒绝",type1="css_1",type2="xpath_1")
-            time.sleep(3)
-            for x in range(1,10):
-                name = self.driver.text_get("div.el-table__body-wrapper tbody>tr:nth-child({0})>td:nth-child(4)".format(x))
-                if name ==self.data["delete_name"]:
-                    self.driver.click("div.el-table__body-wrapper tbody>tr:nth-child({})>td:nth-child(1)".format(x))
-                    self.driver.click("删除",type="contains_text")
-                    self.driver.click("确定",type="contains_text")
-                    self.driver.click("导出",type="starts_with_1")
-                    break
-                else:
-                    self.ExcelData["actual_result"] = "尚未找到需要删除的用户信息"
+            # self.driver.drop_down_choice(4,"审核拒绝",type1="css_1",type2="xpath_1")
+            # time.sleep(3)
+            # for x in range(1,10):
+            #     name = self.driver.text_get("div.el-table__body-wrapper tbody>tr:nth-child({0})>td:nth-child(4)".format(x))
+            #     if name ==self.data["delete_name"]:
+            #         self.driver.click("div.el-table__body-wrapper tbody>tr:nth-child({})>td:nth-child(1)".format(x))
+            #         self.driver.click("删除",type="contains_text")
+            #         self.driver.click("确定",type="contains_text")
+            #         self.driver.click("导出",type="starts_with_1")
+            #         break
+            #     else:
+            #         self.ExcelData["actual_result"] = "尚未找到需要删除的用户信息"
             time.sleep(3)
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
@@ -759,6 +757,9 @@ class all:
         try:
             self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_06,type="input")
             time.sleep(10)
+            if self.driver.list_data_number() !=1:
+                self.ExcelData["actual_result"] = "列表没有渲染错误的失败信息"
+            self.driver.screenShots()
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -770,7 +771,9 @@ class all:
         """离职人员管理-导入页面：导入操作"""
         try:
             self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_07,type="input")
-            time.sleep(10)
+            if self.driver.list_data_number("div.el-table__body-wrapper>table>tbody") !=1:
+                self.ExcelData["actual_result"] = "列表没有渲染错误的失败信息"
+            self.driver.screenShots()
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -812,7 +815,7 @@ class all:
     def test_delete_data(self):
         """删除添加的数据"""
         try:
-            time.sleep(5)
+            time.sleep(0.5)
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()

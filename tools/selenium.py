@@ -46,7 +46,7 @@ class selenium():
     def resfresh(self):
         """刷新页面"""
         self.driver.refresh()
-        time.sleep(2)
+        time.sleep(1)
 
     def open_url(self, url):
         """打开url站点"""
@@ -153,7 +153,7 @@ class selenium():
             elif type1 == "css_1":
                 location1_new = self.driver.find_elements_by_css_selector("div div:nth-child({})>div.el-select>div>span".format(location1))[plural1]
         location1_new.click()
-        time.sleep(1)
+        time.sleep(0.5)
         #选择下拉数据
         if plural2==None:
             if type2 == "css":
@@ -169,7 +169,7 @@ class selenium():
             elif type2 == "contains_text_2":
                 location2_new = self.driver.find_element_by_xpath("//*[contains(text(),'{}')]".format(location2))
             location2_new.click()
-            time.sleep(1)
+            time.sleep(0.5)
         else:
             if type2 == "css":
                 location2_new = self.driver.find_elements_by_css_selector(location2)[plural2]
@@ -184,7 +184,7 @@ class selenium():
             elif type2 == "contains_text_2":
                 location2_new = self.driver.find_elements_by_xpath("//*[contains(text(),'{}')]".format(location2))[plural2]
             location2_new.click()
-            time.sleep(1)
+            time.sleep(0.5)
 
     def upload_file(self, location=None, photo=None,plural=None,location_type="css",type="input"):
         """
@@ -213,7 +213,7 @@ class selenium():
                 elif location_type == "starts_with_1":
                     location_new = self.driver.find_element_by_xpath("//*/span[starts-with(.,'{}')]".format(location))[plural]
             location_new.click()
-            time.sleep(2)
+            time.sleep(1)
             browser_type="chrome"
             if browser_type.lower() == "chrome":
                 title = "打开"
@@ -230,7 +230,7 @@ class selenium():
             button = win32gui.FindWindowEx(dialog, 0, 'Button', "打开(&O)")  # 二级
             win32gui.SendMessage(edit, win32con.WM_SETTEXT, None, photo)  # 发送文件路径
             win32gui.SendMessage(dialog, win32con.WM_COMMAND, 1, button)  # 点击打开按钮
-            time.sleep(3)
+            time.sleep(2)
         #input类型 文件上传
         else:
             if plural == None:
@@ -238,7 +238,7 @@ class selenium():
             else:
                 location_new1 =self.driver.find_elements_by_css_selector(location)[plural]
             location_new1.send_keys(photo)
-        time.sleep(5)
+        #time.sleep(5)
 
     def switch_to(self):
         self.driver.switch_to.alert.text()
@@ -282,7 +282,7 @@ class selenium():
             elif type == "xpath":
                 element = self.driver.find_elements_by_xpath(location)[plural]
             element.click()
-        time.sleep(2)
+        time.sleep(3)
 
     def screenShots(self, name_screenshot="截图"):
         """【用此方法】截图@param name_screenshot:截图名称或图片名称"""
@@ -386,7 +386,7 @@ class selenium():
         upload_files(photo)
         self.driver.implicitly_wait(10)
         time.sleep(0.5)
-        time.sleep(1)
+        time.sleep(0.5)
 
     def FEBCS_CCSKK(self,location,content,enter=False):
         """
@@ -397,7 +397,7 @@ class selenium():
         :return:
         """
         self.driver.implicitly_wait(10)
-        time.sleep(1)
+        time.sleep(0.5)
         location_new = self.driver.find_element_by_css_selector(location)
         location_new.click()
         location_new.clear()
@@ -415,7 +415,7 @@ class selenium():
        @param Enter: 是否回车；传入为0回车；Enter=None不回车
        @return:
        """
-        time.sleep(1)
+        time.sleep(0.5)
         if fushu ==None:
             self.driver.implicitly_wait(50)
             if '\u4e00' <= location <= '\u9fff':
@@ -444,7 +444,7 @@ class selenium():
             new_driver.send_keys(content)
             if Enter == 0:
                 new_driver.send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(0.5)
 
     def send_key(self,content,Enter=None):
         """
@@ -510,7 +510,7 @@ class selenium():
         @param weizhi: 第一步定位的位置
         @return:
         """
-        time.sleep(1)
+        time.sleep(0.5)
         if (">" in location or "." in location) and weizhi != None :
             self.driver.find_elements_by_css_selector(location)[int(weizhi)].click()
         elif (">" in location or "." in location) and weizhi == None :
@@ -524,7 +524,7 @@ class selenium():
         elif '\u4e00' <= location <= '\u9fff' and weizhi == None:
             self.driver.find_element_by_xpath("//*[contains(text(),'{}')]".format(location)).click()
         self.driver.implicitly_wait(10)
-        time.sleep(1)
+        time.sleep(0.5)
         if weizhi == None:
             if "/" in location1 or "//" in location1:
                self.driver.find_element_by_xpath(location1).click()
@@ -536,7 +536,7 @@ class selenium():
             elif ">" in location1:
                 self.driver.find_element_by_css_selector(location1).click()
             self.driver.implicitly_wait(10)
-            time.sleep(1)
+            time.sleep(0.5)
         else:
             if "/" in location1 or "//" in location1:
                self.driver.find_elements_by_xpath(location1)[weizhi].click()
@@ -547,7 +547,7 @@ class selenium():
             elif ">" in location1:
                 self.driver.find_elements_by_css_selector(location1)[weizhi].click()
             self.driver.implicitly_wait(10)
-            time.sleep(1)
+            time.sleep(0.5)
 
     def new_pull_down_choose(self,location,option_name,weizhi=None):
         """
@@ -556,7 +556,7 @@ class selenium():
         @param weizhi:
         @return:
         """
-        time.sleep(1)
+        time.sleep(0.5)
         if '\u4e00' <= location <= '\u9fff':
                 new_driver = self.driver.find_element_by_css_selector("input[placeholder={}]".format(location)).click()
         if ">" in location or "=" in location:
@@ -566,7 +566,7 @@ class selenium():
         time.sleep(0.5)
         new_driver.select_by_visible_text(option_name)
         self.driver.implicitly_wait(10)
-        time.sleep(1)
+        time.sleep(0.5)
 
     def pull_down_choose_s(self, location, option_name):
         """
@@ -637,7 +637,7 @@ class selenium():
         :param operation: YES 确认；NO 取消；TEXT 获取文本
         :return:
         """
-        time.sleep(1)
+        time.sleep(0.5)
         if operation =="YES":
             self.driver.switch_to.alert.accept()
         if operation == "NO":
@@ -752,16 +752,16 @@ class selenium():
         :param content:
         :return:
         """
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.implicitly_wait(20)
         new_location = self.driver.find_element_by_css_selector(location)
         new_location.click()
         new_location.clear()
         new_location.send_keys(content)
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.implicitly_wait(20)
         self.driver.find_element_by_css_selector("div.el-cascader__suggestion-panel.el-scrollbar > div.el-scrollbar__wrap > ul > li:nth-child(1)").click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.implicitly_wait(20)
 
     def zzl_company_inquire_s(self, content, location="input[placeholder=\"请选择所属机构\"]",type="css"):
@@ -771,7 +771,7 @@ class selenium():
         :param content:
         :return:
         """
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.implicitly_wait(20)
         if type =="css":
             new_location = self.driver.find_element_by_css_selector(location)
@@ -790,14 +790,14 @@ class selenium():
         :param location2:
         :return:
         """
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.implicitly_wait(20)
         if location1_type == "css_default":
             location1_click = self.driver.find_element_by_css_selector(location1)
         if location1_type == "css_zzl_1":
             location1_click = self.driver.find_element_by_css_selector("div div:nth-child({})>div.el-select>div>span".format(location1))
         location1_click.click()
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.implicitly_wait(20)
         if location2_type == "xpath_default":
             location2_click = self.driver.find_element_by_xpath(location2)
@@ -816,7 +816,7 @@ class selenium():
         :param type:  定位的类型
         :return:
         """
-        time.sleep(1)
+        time.sleep(0.5)
         self.driver.implicitly_wait(20)
         if type == "id":
             text_frame = self.driver.find_elements_by_id(location)
@@ -833,13 +833,13 @@ class selenium():
         elif location.isalpha() == True:
             text_frame = self.driver.find_element_by_css_selector(" div:nth-child({}) > div > input".format(location))
         text_frame.click()
-        time.sleep(1)
+        time.sleep(0.5)
         if empty == True:
             text_frame.clear()
         text_frame.send_keys(content)
         if  Enter == True:
             text_frame.send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(0.5)
 
 
 
