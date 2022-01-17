@@ -39,6 +39,7 @@ class Test_all(object):
     def setup_method(self):
         pass
 
+    # @pytest.mark.test
     @pytest.mark.account_login
     @pytest.mark.parametrize("Data",ExcelData("test_logion_fail"))
     @pytest.mark.run(order=103)
@@ -46,7 +47,7 @@ class Test_all(object):
         """账号登录：失败"""
         self.assert_result = all(driver,Data).test_logion_fail()
 
-
+    # @pytest.mark.test
     @pytest.mark.account_login
     @pytest.mark.parametrize("Data",ExcelData("test_logion_succeed"))
     @pytest.mark.run(order=104)

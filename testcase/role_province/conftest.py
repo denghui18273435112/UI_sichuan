@@ -39,6 +39,7 @@ def driver():
     option.add_argument('window-size=1920x1080')
     option.add_experimental_option("excludeSwitches", ['enable-automation']);
     driver = webdriver.Chrome(options=option)
+    driver.implicitly_wait(50)
     driver.maximize_window()
     while True:
         driver.get(login["url"])
@@ -67,6 +68,5 @@ def driver():
             break
         driver.find_element_by_css_selector('span.login-button').click()
     #print("登录成功的cookies信息:{}\n".format(driver.get_cookies()))
-    #time.sleep(5)
     yield driver
     driver.quit()

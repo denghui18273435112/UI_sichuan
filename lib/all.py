@@ -22,9 +22,10 @@ class all:
         self.driver = selenium(driver)
         self.data = json.loads(Data["data"])
         self.ExcelData = Data
+        self.driver.resfresh()
         self.driver.url_skip(self.ExcelData["URL"])
         print("\n{} 运行中.....".format(self.ExcelData["test_id"]))
-        time.sleep(5)
+        time.sleep(10)
 
     def overview_digital(self):
         """"数字概览：饼图统计"""
@@ -171,8 +172,7 @@ class all:
              self.driver.click("div.top20.table-area > div.tabs > span.tables > svg")
              if  self.driver.list_data_number(location="div.is-scrolling-none>table>tbody",plural=0) >0 and self.driver.list_data_number(location="div.is-scrolling-none>table>tbody",plural=1) >0:
                  self.driver.click("div.top20.table-area > div.tabs > span.chart >svg")
-                 self.driver.text_input("div.condition > div > div > div:nth-child(1) > div > input",
-                                         self.driver.text_get(" table > tbody > tr:nth-child(1) > td.el-table_1_column_1.is-center > div"),Enter=True)
+                 self.driver.text_input("div.condition > div > div > div:nth-child(1) > div > input",self.data["company"],Enter=True)
                  self.driver.click("div.condition > div > div > div:nth-child(2) > span")
              else:
                 self.ExcelData["actual_result"] = "列表数据数据;请手动确认此模块是否存在异常"
@@ -392,16 +392,16 @@ class all:
     def test_CreditInquire(self):
         """培训记录统计-字段查询、按钮操作"""
         try:
-            # self.driver.text_input("input[placeholder='请选择所属机构']",self.data["company"],empty=True)
-            # self.driver.click("div.el-cascader__suggestion-panel.el-scrollbar > div.el-scrollbar__wrap > ul > li:nth-child(1)")
-            self.driver.drop_down_choice(5,"本机构",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(5,"其他第三方",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(2,"2020",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(2,"2021",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(4,"线上",type1="css_1",type2="xpath_1")
-            self.driver.click("导出",type="starts_with_1")
-            #self.driver.drop_down_choice(4,"全部",type1="css_1",type2="xpath_1",plural2=3)
-            self.driver.click("导出",type="starts_with_1")
+            if  self.driver.list_data_number()>1:
+                self.driver.drop_down_choice(5,"本机构",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(5,"其他第三方",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(2,"2020",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(2,"2021",type1="css_1",type2="xpath_1")
+                self.driver.drop_down_choice(4,"线上",type1="css_1",type2="xpath_1")
+                self.driver.click("导出",type="starts_with_1")
+                self.driver.click("导出",type="starts_with_1")
+            else:
+                self.ExcelData["actual_result"] = "列表没有数据"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()
@@ -480,7 +480,7 @@ class all:
                 self.driver.click("导出",type="starts_with_1")
                 self.driver.text_input("//*/span[starts-with(.,'前往')]//input",10,type="xpath",empty=True)
                 self.driver.click("模板下载",type="starts_with_1")
-                #self.driver.upload_file("批量导入查询",file_path_05,location_type="contains_text",type="no_input")
+                self.driver.upload_file("批量导入查询",file_path_05,location_type="contains_text",type="no_input")
                 self.driver.upload_file("div:nth-child(8) > div > div > input",file_path_05,type="input")
                 time.sleep(5)
             else:
@@ -757,7 +757,7 @@ class all:
         try:
             self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_06,type="input")
             time.sleep(10)
-            if self.driver.list_data_number() !=1:
+            if self.driver.list_data_number() ==0:
                 self.ExcelData["actual_result"] = "列表没有渲染错误的失败信息"
             self.driver.screenShots()
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
@@ -771,7 +771,7 @@ class all:
         """离职人员管理-导入页面：导入操作"""
         try:
             self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_07,type="input")
-            if self.driver.list_data_number("div.el-table__body-wrapper>table>tbody") !=1:
+            if self.driver.list_data_number("div.el-table__body-wrapper>table>tbody") ==0:
                 self.ExcelData["actual_result"] = "列表没有渲染错误的失败信息"
             self.driver.screenShots()
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
@@ -815,7 +815,7 @@ class all:
     def test_delete_data(self):
         """删除添加的数据"""
         try:
-            time.sleep(0.5)
+            time.sleep(5)
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
         except BaseException:
             traceback.print_exc()

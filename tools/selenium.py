@@ -46,7 +46,7 @@ class selenium():
     def resfresh(self):
         """刷新页面"""
         self.driver.refresh()
-        time.sleep(1)
+        time.sleep(3)
 
     def open_url(self, url):
         """打开url站点"""
@@ -84,6 +84,7 @@ class selenium():
         elif type == "zzl_list_02":#悬浮
             new_location = self.driver.find_element_by_css_selector("div.el-table__fixed-body-wrapper tbody>tr:nth-child({0})>td:nth-child({1})".
                                                                     format(location1,location))
+        time.sleep(2)
         return new_location.text
 
     def text_input(self,location,content,plural=None,Enter=False,empty=False,type="css"):
@@ -137,7 +138,7 @@ class selenium():
         if  Enter == True:
             text_frame.send_keys(Keys.ENTER)
             time.sleep(1)
-        time.sleep(1)
+        time.sleep(2)
 
     def drop_down_choice(self, location1, location2, plural1=None,plural2=None,type1="css", type2="css"):
         """【用此方法】下拉选择"""
@@ -153,7 +154,7 @@ class selenium():
             elif type1 == "css_1":
                 location1_new = self.driver.find_elements_by_css_selector("div div:nth-child({})>div.el-select>div>span".format(location1))[plural1]
         location1_new.click()
-        time.sleep(0.5)
+        time.sleep(2)
         #选择下拉数据
         if plural2==None:
             if type2 == "css":
@@ -169,7 +170,7 @@ class selenium():
             elif type2 == "contains_text_2":
                 location2_new = self.driver.find_element_by_xpath("//*[contains(text(),'{}')]".format(location2))
             location2_new.click()
-            time.sleep(0.5)
+            time.sleep(2)
         else:
             if type2 == "css":
                 location2_new = self.driver.find_elements_by_css_selector(location2)[plural2]
@@ -184,7 +185,7 @@ class selenium():
             elif type2 == "contains_text_2":
                 location2_new = self.driver.find_elements_by_xpath("//*[contains(text(),'{}')]".format(location2))[plural2]
             location2_new.click()
-            time.sleep(0.5)
+            time.sleep(2)
 
     def upload_file(self, location=None, photo=None,plural=None,location_type="css",type="input"):
         """
@@ -238,7 +239,7 @@ class selenium():
             else:
                 location_new1 =self.driver.find_elements_by_css_selector(location)[plural]
             location_new1.send_keys(photo)
-        #time.sleep(5)
+        time.sleep(5)
 
     def switch_to(self):
         self.driver.switch_to.alert.text()
@@ -317,7 +318,6 @@ class selenium():
                 js='document.querySelectorAll("{0}")[{1}].scroll{2}={3}'.format(location, plural,Scroll_way, Scroll_position)
         elif  Scroll_type== "windows":#浏览器自带滚动条
             js = "window.scrollTo(0,{})".format(Scroll_position)
-        #print(js)
         self.driver.execute_script(js)
 
 
@@ -364,7 +364,7 @@ class selenium():
         @return:
         """
         self.driver.execute_script( 'document.getElementsByClassName("{}")[0].scrollTop={}'.format(location,up))
-        time.sleep(0.5)
+        time.sleep(1)
 
 
     def editor_upload_photo(self,location1="i.w-e-icon-image",location2="i.w-e-icon-upload2",photo="banner.png"):
