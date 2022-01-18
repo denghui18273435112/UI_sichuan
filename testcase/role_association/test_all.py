@@ -107,7 +107,7 @@ class Test_all(object):
         """账号管理-账号删除"""
         self.assert_result = all(driver,Data).test_account_management_delete()
 
-    # @pytest.mark.test
+    #@pytest.mark.test
     @pytest.mark.role_association
     @pytest.mark.parametrize("Data",ExcelData("test_update_01"))
     @pytest.mark.run(order=206)

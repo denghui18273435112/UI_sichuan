@@ -802,10 +802,10 @@ class all:
                     self.driver.screenShots("图片上传")
                     time.sleep(5)
                     self.driver.click("div.el-dialog__body  div.footer > span.primary",plural=1)
-                    msg = self.driver.text_get("div.el-message>p",type="css_2")
-                    if msg != "修改成功":
-                        self.ExcelData["actual_result"] = "修改失败"
-                    self.driver.screenShots("成功修改信息")
+                    # msg = self.driver.text_get("div.el-message>p",type="css_2")
+                    # if msg != "修改成功":
+                    #     self.ExcelData["actual_result"] = "修改失败"
+                    # self.driver.screenShots("成功修改信息")
             else:
                 self.ExcelData["actual_result"] = "当前列表没有数据"
             #截图/校验部分/用于判断用例是否通过/定位不到抛异常
