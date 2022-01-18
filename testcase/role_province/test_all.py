@@ -39,7 +39,7 @@ class Test_all(object):
         """数字概览：饼图统计"""
         self.assert_result = all(driver,Data).overview_digital()
 
-    # @pytest.mark.test
+    @pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.run(order=2)
     @pytest.mark.parametrize("Data",ExcelData("test_standard_direction"))

@@ -17,8 +17,8 @@ if __name__ == "__main__":
                    "-s", "./testcase/role_association/test_all.py",
                    "-s", "./testcase/account_login/test_all.py",
                     "-s", "./testcase/delete_data/test_all.py",
-                   "-m", "not(login or no)",
-                   # "-m", "test",
+                   # "-m", "not(login or no)",
+                   "-m", "test",
                    "--maxfail=1",
                   "--alluredir", result_path])
     # os.system("allure generate {0} -o {1} --clean".format(result_path, allure_report_path))
