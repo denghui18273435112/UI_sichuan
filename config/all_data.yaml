@@ -10,7 +10,7 @@ login:
   province_role:  "省公司角色"
   login_account2: "zzl-sgs-sx"
   login_password2: "admin123"
-  appear_window: False
+  appear_window: True
 
 #数据库连接信息
 database:

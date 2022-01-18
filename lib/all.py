@@ -474,6 +474,8 @@ class all:
                 self.driver.drop_down_choice(3,"2020",type1="css_1",type2="xpath_1",plural1=0)
                 self.driver.drop_down_choice(3,"2021",type1="css_1",type2="xpath_1",plural1=0)
                 self.driver.drop_down_choice(5,"身份证",type1="css_1",type2="xpath_1",plural1=0)
+                self.driver.click("重置",type="contains_text")
+                time.sleep(5)
                 self.driver.text_input("div:nth-child(4) > div.el-input > input[placeholder='请输入']",self.driver.text_get(2,"zzl_list_01"))
                 self.driver.text_input("div:nth-child(6) > div.el-input > input[placeholder='请输入']",self.driver.text_get(4,"zzl_list_01"))
                 self.driver.click("查询",type="starts_with_1")
@@ -798,6 +800,7 @@ class all:
                     self.driver.click("div.el-table__fixed-body-wrapper tbody>tr:nth-child({})>td:nth-child(13) svg:nth-child(2)".format(x))
                     self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_10,plural=0,type="input")
                     self.driver.screenShots("图片上传")
+                    time.sleep(5)
                     self.driver.click("div.el-dialog__body  div.footer > span.primary",plural=1)
                     msg = self.driver.text_get("div.el-message>p",type="css_2")
                     if msg != "修改成功":
