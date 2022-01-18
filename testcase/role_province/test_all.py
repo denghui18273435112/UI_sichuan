@@ -31,7 +31,7 @@ class Test_all(object):
     def teardown_class(self):
         allure.attach(body="TEST-05", name="每个类结束执行一次", attachment_type=allure.attachment_type.TEXT)
 
-    @pytest.mark.test
+    #@pytest.mark.test
     @pytest.mark.role_province
     @pytest.mark.run(order=1)
     @pytest.mark.parametrize("Data",ExcelData("test_overview_digital"))
