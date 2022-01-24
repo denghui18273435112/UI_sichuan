@@ -68,5 +68,6 @@ def driver():
             break
         driver.find_element_by_css_selector('span.login-button').click()
     #print("登录成功的cookies信息:{}\n".format(driver.get_cookies()))
+    time.sleep(10)
     yield driver
     driver.quit()

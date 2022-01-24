@@ -22,7 +22,6 @@ class all:
         self.driver = selenium(driver)
         self.data = json.loads(Data["data"])
         self.ExcelData = Data
-        self.driver.resfresh()
         self.driver.url_skip(self.ExcelData["URL"])
         print("\n{} 运行中.....".format(self.ExcelData["test_id"]))
         time.sleep(10)
@@ -341,7 +340,7 @@ class all:
         """账号管理-账号删除"""
         try:
             time.sleep(15)
-            for x in range(1,10):
+            for x in range(1,20):
                 name = self.driver.text_get("div.el-table__body-wrapper tbody>tr:nth-child({0})>td:nth-child(2)".format(x))
                 if name ==self.data["delete_user"]:
                     self.driver.click("div.el-table__body-wrapper tbody>tr:nth-child({})>td:nth-child(1)".format(x))
@@ -393,13 +392,14 @@ class all:
         """培训记录统计-字段查询、按钮操作"""
         try:
             if  self.driver.list_data_number()>1:
-                self.driver.drop_down_choice(5,"本机构",type1="css_1",type2="xpath_1")
-                self.driver.drop_down_choice(5,"其他第三方",type1="css_1",type2="xpath_1")
-                self.driver.drop_down_choice(2,"2020",type1="css_1",type2="xpath_1")
-                self.driver.drop_down_choice(2,"2021",type1="css_1",type2="xpath_1")
-                self.driver.drop_down_choice(4,"线上",type1="css_1",type2="xpath_1")
+                time.sleep(10)
+                # self.driver.drop_down_choice(5,"本机构",type1="css_1",type2="xpath_1")
+                # self.driver.drop_down_choice(5,"其他第三方",type1="css_1",type2="xpath_1")
+                # self.driver.drop_down_choice(2,"2020",type1="css_1",type2="xpath_1")
+                # self.driver.drop_down_choice(2,"2021",type1="css_1",type2="xpath_1")
+                # self.driver.drop_down_choice(4,"线上",type1="css_1",type2="xpath_1")
                 self.driver.click("导出",type="starts_with_1")
-                self.driver.click("导出",type="starts_with_1")
+                # self.driver.click("导出",type="starts_with_1")
             else:
                 self.ExcelData["actual_result"] = "列表没有数据"
         #截图/校验部分/用于判断用例是否通过/定位不到抛异常
@@ -411,12 +411,12 @@ class all:
 
 
     def test_TrainingFileManage(self):
-        """培训档案管理：删除数据"""
+        """培训档案管理：审核数据"""
         try:
             self.driver.click("导出",type="starts_with_1")
-            self.driver.drop_down_choice(2,"2020",type1="css_1",type2="xpath_1")
-            self.driver.drop_down_choice(2,"2021",type1="css_1",type2="xpath_1")
-            self.driver.click("重置",type="starts_with_1")
+            # self.driver.drop_down_choice(2,"2020",type1="css_1",type2="xpath_1")
+            # self.driver.drop_down_choice(2,"2021",type1="css_1",type2="xpath_1")
+            # self.driver.click("重置",type="starts_with_1")
             for x in range(1,10):
                 name = self.driver.text_get("div.el-table__body-wrapper tbody>tr:nth-child({0})>td:nth-child(4)".format(x))
                 if name ==self.data["delete_name"]:
@@ -786,6 +786,8 @@ class all:
     def test_update_01(self):
         """个人信息修改"""
         try:
+            self.driver.resfresh()
+            time.sleep(5)
             self.driver.click("个人信息修正","contains_text")
             self.driver.click("div.condition span",plural=6)
             self.driver.text_input("div.container textarea", self.data["nameORnumber"])
@@ -831,7 +833,9 @@ class all:
         try:
             #批量查询
             self.driver.click("批量查询",type="contains_text")
+            time.sleep(5)
             self.driver.text_input("div.container textarea", self.data["nameORnumber"])
+            time.sleep(3)
             self.driver.click("div.el-dialog__body span.zzl-button.primary:nth-child(2)")
             time.sleep(5)
             list_data_number =self.driver.list_data_number("div.is-scrolling-left.el-table__body-wrapper>table>tbody")
@@ -975,6 +979,7 @@ class all:
             self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_08,plural=0,type="input")
             self.driver.upload_file(location="div.el-upload.el-upload--text>input",photo=file_path_09,plural=1,type="input")
             self.driver.screenShots("零报告")
+            time.sleep(5)
             self.driver.click("div.btns > span.zzl-button.primary")
             #列表操作
             self.driver.resfresh()
